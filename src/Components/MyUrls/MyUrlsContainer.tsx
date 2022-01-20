@@ -1,28 +1,31 @@
 import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
-import RedirectionToUrlPromtContainer from "./Components/RedirectionToUrl/RedirectionToUrlPromtContainer";
+import MyUrlItem from "./MyUrlItem";
+
+interface Props {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      marginLeft: "10%",
-      marginRight: "10%",
+    container: {
+      width: "100%",
       display: "flex",
-      alignItems: "center",
+      flexDirection: "column",
       justifyContent: "center",
+      alignItems: "center",
     },
   })
 );
 
-function App() {
+function MyUrlsContainer(props: Props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <RedirectionToUrlPromtContainer />
+    <div className={classes.container}>
+      <MyUrlItem />
+      <MyUrlItem />
     </div>
   );
 }
 
-export default App;
+export default MyUrlsContainer;
