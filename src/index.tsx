@@ -1,13 +1,24 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import Header from "./Components/Header/Header";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Header></Header>
-    <App />
+    <BrowserRouter>
+      <Suspense
+        fallback={
+          <div style={{ margin: "auto", marginTop: "30%" }}>
+            <CircularProgress />
+          </div>
+        }
+      >
+        <App />
+      </Suspense>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
