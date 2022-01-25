@@ -1,12 +1,16 @@
-import { Theme } from "@mui/material";
+import { Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import React from "react";
+import { isSameDay, isWithinInterval } from "date-fns";
+import React, { useState } from "react";
+import { CreateShortUrlType } from "../../Api/ApiResponseTypes";
 import FormButton from "../Buttons/FormButton";
 import DateInput from "../FormInput/DateInput";
 import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
 
-interface Props {}
+interface Props {
+  onSubmit: (createShortUrl: CreateShortUrlType) => void;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,6 +28,64 @@ const useStyles = makeStyles((theme: Theme) =>
 function CreateShortUrlFormContainer(props: Props) {
   const classes = useStyles();
 
+  const minDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
+  const maxDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
+
+  const [shortUrl, setShortUrl] = useState<CreateShortUrlType>({
+    longUrl: "",
+    expirationDate: minDate,
+  });
+
+  const [dateError, setDateError] = useState<string>("");
+  const [longUrlError, setLongUrlError] = useState<string>("");
+
+  console.log(shortUrl);
+
+  const setLongUrl = (longUrl: string) => {
+    setShortUrl({ ...shortUrl, longUrl: longUrl });
+  };
+
+  const setExpirationDate = (expirationDate: Date | null) => {
+    setShortUrl({
+      ...shortUrl,
+      expirationDate: expirationDate ? expirationDate : minDate,
+    });
+  };
+
+  const onSubmitForm = () => {
+    var longUrl = shortUrl.longUrl;
+
+    if (
+      !(
+        shortUrl.longUrl.startsWith("http://") ||
+        shortUrl.longUrl.startsWith("https://")
+      )
+    ) {
+      setShortUrl({ ...shortUrl, longUrl: "http://" + shortUrl.longUrl });
+      longUrl = "http://" + longUrl;
+    }
+
+    if (!isValidURL(longUrl)) {
+      setLongUrlError("Invalid URL format");
+      return;
+    }
+
+    props.onSubmit(shortUrl);
+  };
+
+  function isValidURL(str: string) {
+    var pattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
+      "i"
+    ); // fragment locator
+    return !!pattern.test(str);
+  }
+
   return (
     <div className={classes.buttonsContainer}>
       <FormTextLabel
@@ -31,9 +93,16 @@ function CreateShortUrlFormContainer(props: Props) {
         textVariant="h6"
         fontWeight="bold"
       />
-      <FormTextInput placeHolderText="eg www.shortUrl.com" />
+      <FormTextInput
+        placeHolderText="eg www.shortUrl.com"
+        onChange={(event) => {
+          setLongUrlError("");
+          setLongUrl(event.target.value);
+        }}
+      />
+      {longUrlError.length > 0 && <Typography>{longUrlError}</Typography>}
       <div>
-        <FormTextLabel
+        {/* <FormTextLabel
           text="Customize short URL ID"
           textVariant="h6"
           fontWeight="bold"
@@ -54,7 +123,7 @@ function CreateShortUrlFormContainer(props: Props) {
             placeHolderText="eg www.shortUrl.com"
             containerStyle={{ flex: "1", marginLeft: "10px" }}
           />
-        </div>
+        </div> */}
         <div>
           <FormTextLabel
             text="Customize exipration date"
@@ -67,9 +136,16 @@ function CreateShortUrlFormContainer(props: Props) {
             fontStyle="italic"
             textColor="rgba(0,0,0,0.54)"
           />
-          <DateInput onChange={(date) => console.log(date)} />
+          <DateInput
+            value={shortUrl.expirationDate}
+            onChange={(date) => setExpirationDate(date)}
+            minDate={minDate}
+            maxDate={maxDate}
+            setDateError={setDateError}
+          />
+          {dateError.length > 0 && <Typography>{dateError}</Typography>}
         </div>
-        <FormButton text="Shorten" />
+        <FormButton text="Shorten" onClick={() => onSubmitForm()} />
       </div>
     </div>
   );

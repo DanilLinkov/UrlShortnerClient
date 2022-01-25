@@ -1,8 +1,12 @@
 import { Button, Grid, Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
+import { ShortUrlType } from "../../Api/ApiResponseTypes";
 
-interface Props {}
+interface Props {
+  item: ShortUrlType;
+  onDelete: () => void;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
 function MyUrlItem(props: Props) {
   const classes = useStyles();
 
+  const onDelete = () => {};
+
   return (
     <div className={classes.itemContainer}>
       <Grid container justifyContent="center" alignItems="center">
@@ -32,10 +38,17 @@ function MyUrlItem(props: Props) {
           alignItems="center"
         >
           <Grid item xs={6}>
-            <Typography style={{ textAlign: "start" }}>ShortUrlName</Typography>
+            <Typography style={{ textAlign: "start" }}>
+              {props.item.shortenedUrl}
+            </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography style={{ textAlign: "end" }}>Date</Typography>
+            <Typography style={{ textAlign: "end" }}>
+              {props.item.creationDate}
+            </Typography>
+            <Typography style={{ textAlign: "end" }}>
+              {props.item.expirationDate}
+            </Typography>
           </Grid>
         </Grid>
         <Grid
@@ -46,10 +59,14 @@ function MyUrlItem(props: Props) {
           alignItems="center"
         >
           <Grid item xs={6}>
-            <Typography style={{ textAlign: "start" }}>long link</Typography>
+            <Typography style={{ textAlign: "start" }}>
+              {props.item.longUrl}
+            </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography style={{ textAlign: "end" }}>4 uses</Typography>
+            <Typography style={{ textAlign: "end" }}>
+              {props.item.uses}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -67,7 +84,9 @@ function MyUrlItem(props: Props) {
             <Button variant="contained">Edit</Button>
           </Grid>
           <Grid item>
-            <Button variant="contained">Delete</Button>
+            <Button variant="contained" onClick={props.onDelete}>
+              Delete
+            </Button>
           </Grid>
         </Grid>
       </Grid>

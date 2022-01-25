@@ -1,7 +1,9 @@
 import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { ShortUrlType } from "./Api/ApiResponseTypes";
+import ShortUrlApi from "./Api/ShortUrlApi";
 import Header from "./Components/Header/Header";
 import RedirectionToUrlPromtContainer from "./Components/RedirectionToUrl/RedirectionToUrlPromtContainer";
 import Home from "./Screens/Home";
@@ -23,7 +25,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function App() {
+  // const [shortUrls, setShortUrls] = useState<ShortUrlType[]>([]);
+
   const classes = useStyles();
+
+  // useEffect(() => {
+  //   ShortUrlApi.GetAllCreatedShortUrls().then((shortUrls) => {
+  //     setShortUrls(shortUrls.data.result);
+  //   });
+  // }, []);
 
   return (
     <div>

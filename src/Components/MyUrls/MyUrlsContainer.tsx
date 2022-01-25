@@ -1,9 +1,13 @@
 import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
+import { ShortUrlType } from "../../Api/ApiResponseTypes";
 import MyUrlItem from "./MyUrlItem";
 
-interface Props {}
+interface Props {
+  myUrls: ShortUrlType[] | undefined;
+  onDelete: (item: ShortUrlType) => void;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,8 +26,15 @@ function MyUrlsContainer(props: Props) {
 
   return (
     <div className={classes.container}>
-      <MyUrlItem />
-      <MyUrlItem />
+      {props.myUrls?.map((item, index) => {
+        return (
+          <MyUrlItem
+            key={index}
+            item={item}
+            onDelete={() => props.onDelete(item)}
+          />
+        );
+      })}
     </div>
   );
 }
