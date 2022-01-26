@@ -48,7 +48,7 @@ function FormTextLabel(props: Props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.textContainer}>
+    <div className={classes.textContainer} style={{ ...props.containerStyle }}>
       <Typography
         variant={props.textVariant}
         color={props.textColor}

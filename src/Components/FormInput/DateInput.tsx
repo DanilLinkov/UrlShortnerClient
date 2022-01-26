@@ -20,10 +20,9 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    input: {
-      background: "rgb(255, 255, 255)",
+    dateInput: {
       "& .MuiOutlinedInput-notchedOutline": {
-        // border: "none",
+        borderRadius: "15px",
       },
     },
   })
@@ -39,9 +38,14 @@ function DateInput(props: Props) {
           label={props.label}
           value={props.value}
           onChange={props.onChange}
-          InputProps={{ className: classes.input }}
+          InputProps={{ className: classes.dateInput }}
           renderInput={(params) => (
-            <TextField {...params} variant="outlined" fullWidth />
+            <TextField
+              {...params}
+              variant="outlined"
+              fullWidth
+              sx={{ borderRadius: "15px", background: "rgb(255, 255, 255)" }}
+            />
           )}
           onError={(reason, value) => {
             switch (reason) {

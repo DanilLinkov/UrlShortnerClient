@@ -1,4 +1,4 @@
-import { Theme, Typography } from "@mui/material";
+import { Grid, Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import { isSameDay, isWithinInterval } from "date-fns";
 import React, { useState } from "react";
@@ -10,17 +10,23 @@ import FormTextLabel from "../FormInput/FormTextLabel";
 
 interface Props {
   onSubmit: (createShortUrl: CreateShortUrlType) => void;
+  apiError: string;
+  loading: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonsContainer: {
-      padding: "20px",
+      padding: "4%",
       backgroundColor: "rgba(255, 255, 255, 0.57)",
-      borderRadius: "5px",
+      borderRadius: "20px",
       boxShadow: "-10px 10px 20px 10px rgba(0,0,0,0.23)",
-      width: "90%",
+      width: "70%",
       border: "#FFFFFF solid 2px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
     },
   })
 );
@@ -32,14 +38,22 @@ function CreateShortUrlFormContainer(props: Props) {
   const maxDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
 
   const [shortUrl, setShortUrl] = useState<CreateShortUrlType>({
+    customId: "",
     longUrl: "",
     expirationDate: minDate,
   });
 
-  const [dateError, setDateError] = useState<string>("");
+  const [customIdError, setCustomIdError] = useState<string>("");
   const [longUrlError, setLongUrlError] = useState<string>("");
+  const [dateError, setDateError] = useState<string>("");
 
-  console.log(shortUrl);
+  const setCustomId = (customId: string) => {
+    if (customId.length > 12) {
+      return;
+    }
+
+    setShortUrl({ ...shortUrl, customId: customId });
+  };
 
   const setLongUrl = (longUrl: string) => {
     setShortUrl({ ...shortUrl, longUrl: longUrl });
@@ -53,7 +67,12 @@ function CreateShortUrlFormContainer(props: Props) {
   };
 
   const onSubmitForm = () => {
+    let isError = false;
+
     var longUrl = shortUrl.longUrl;
+
+    setCustomIdError("");
+    setLongUrlError("");
 
     if (
       !(
@@ -67,10 +86,17 @@ function CreateShortUrlFormContainer(props: Props) {
 
     if (!isValidURL(longUrl)) {
       setLongUrlError("Invalid URL format");
-      return;
+      isError = true;
     }
 
-    props.onSubmit(shortUrl);
+    if (shortUrl.customId!!.length > 0 && shortUrl.customId!!.length < 4) {
+      setCustomIdError("Custom ID must be at least 4 characters long");
+      isError = true;
+    }
+
+    if (!isError) {
+      props.onSubmit(shortUrl);
+    }
   };
 
   function isValidURL(str: string) {
@@ -92,6 +118,11 @@ function CreateShortUrlFormContainer(props: Props) {
         text="Enter URL to shorten"
         textVariant="h6"
         fontWeight="bold"
+        containerStyle={{
+          width: "100%",
+          textAlign: "start",
+          marginBottom: "5px",
+        }}
       />
       <FormTextInput
         placeHolderText="eg www.shortUrl.com"
@@ -99,31 +130,73 @@ function CreateShortUrlFormContainer(props: Props) {
           setLongUrlError("");
           setLongUrl(event.target.value);
         }}
+        containerStyle={{ width: "100%" }}
       />
-      {longUrlError.length > 0 && <Typography>{longUrlError}</Typography>}
-      <div>
-        {/* <FormTextLabel
+      {longUrlError.length > 0 && (
+        <Typography
+          color="red"
+          fontWeight="bold"
+          fontStyle="italic"
+          style={{ marginTop: "5px" }}
+        >
+          {longUrlError}
+        </Typography>
+      )}
+      <div style={{ width: "100%" }}>
+        <FormTextLabel
           text="Customize short URL ID"
           textVariant="h6"
           fontWeight="bold"
+          containerStyle={{
+            width: "100%",
+            textAlign: "start",
+            marginBottom: "15px",
+            marginTop: "15px",
+          }}
         />
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            marginBottom: "15px",
+            flexDirection: "column",
           }}
         >
-          <FormTextInput
-            placeHolderText="ShortUrl.com/"
-            readonly={true}
-            containerStyle={{ flex: "1", marginRight: "10px" }}
-          />
-          <FormTextInput
-            placeHolderText="eg www.shortUrl.com"
-            containerStyle={{ flex: "1", marginLeft: "10px" }}
-          />
-        </div> */}
+          <Grid container>
+            <Grid item xs={12} sm={12} md={12} lg={3}>
+              <FormTextLabel
+                text="https://shorturl.com/"
+                textVariant="body1"
+                fontStyle="italic"
+                containerStyle={{
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={9}>
+              <FormTextInput
+                placeHolderText="eg www.shortUrl.com"
+                value={shortUrl.customId}
+                onChange={(event) => {
+                  setCustomId(event.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          {customIdError.length > 0 && (
+            <Typography
+              color="red"
+              fontWeight="bold"
+              fontStyle="italic"
+              style={{ marginTop: "5px" }}
+            >
+              {customIdError}
+            </Typography>
+          )}
+        </div>
         <div>
           <FormTextLabel
             text="Customize exipration date"
@@ -131,10 +204,11 @@ function CreateShortUrlFormContainer(props: Props) {
             fontWeight="bold"
           />
           <FormTextLabel
-            text="short URL expires in 1 month from creation by default"
+            text="short URL expires in 1 day from creation by default"
             textVariant="body1"
             fontStyle="italic"
             textColor="rgba(0,0,0,0.54)"
+            containerStyle={{ marginBottom: "10px" }}
           />
           <DateInput
             value={shortUrl.expirationDate}
@@ -143,9 +217,35 @@ function CreateShortUrlFormContainer(props: Props) {
             maxDate={maxDate}
             setDateError={setDateError}
           />
-          {dateError.length > 0 && <Typography>{dateError}</Typography>}
+          {dateError.length > 0 && (
+            <Typography
+              color="red"
+              fontWeight="bold"
+              fontStyle="italic"
+              textAlign="center"
+              style={{ marginTop: "5px" }}
+            >
+              {dateError}
+            </Typography>
+          )}
         </div>
-        <FormButton text="Shorten" onClick={() => onSubmitForm()} />
+        <FormButton
+          text="Shorten"
+          onClick={() => onSubmitForm()}
+          disabled={props.loading}
+          loading={props.loading}
+        />
+        {props.apiError.length > 0 && (
+          <Typography
+            color="red"
+            fontWeight="bold"
+            fontStyle="italic"
+            textAlign="center"
+            style={{ marginTop: "15px" }}
+          >
+            {props.apiError}
+          </Typography>
+        )}
       </div>
     </div>
   );

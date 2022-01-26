@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "flex-end",
       padding: "20px",
+      marginBottom: "20px",
     },
   })
 );

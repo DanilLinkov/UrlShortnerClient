@@ -19,6 +19,11 @@ export type RegisterResponseType = {
   result: Map<string, string>;
 };
 
+export type CreateErrorType = {
+  statusCode: number;
+  message: string;
+};
+
 export type GetAllCreatedShortUrlsType = {
   statusCode: string;
   result: ShortUrlType[];
@@ -42,6 +47,7 @@ export type ShortUrlType = {
 };
 
 export type CreateShortUrlType = {
+  customId?: string;
   longUrl: string;
   expirationDate: Date;
 };

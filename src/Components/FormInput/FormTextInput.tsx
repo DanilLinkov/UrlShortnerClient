@@ -8,14 +8,14 @@ interface Props {
   label?: string;
   readonly?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     input: {
-      background: "rgb(255, 255, 255)",
       "& .MuiOutlinedInput-notchedOutline": {
-        // border: "none",
+        borderRadius: "15px",
       },
     },
   })
@@ -33,6 +33,8 @@ function FormTextInput(props: Props) {
         label={props.label}
         placeholder={props.placeHolderText}
         onChange={props.onChange}
+        value={props.value}
+        sx={{ borderRadius: "15px", background: "rgb(255, 255, 255)" }}
       />
     </div>
   );

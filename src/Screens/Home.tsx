@@ -15,20 +15,30 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Home(props: Props) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<string>("");
 
   const classes = useStyles();
 
   const createShortUrl = (createShortUrl: CreateShortUrlType) => {
+    setApiError("");
     setLoading(true);
 
-    ShortUrlApi.CreateShortUrl(createShortUrl).then((response) => {
-      setLoading(false);
-
-      // Link to created short url screen
-    });
+    ShortUrlApi.CreateShortUrl(createShortUrl)
+      .then((response) => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setApiError(error.response.data.message);
+      });
   };
 
-  return <CreateShortUrlFormContainer onSubmit={createShortUrl} />;
+  return (
+    <CreateShortUrlFormContainer
+      onSubmit={createShortUrl}
+      apiError={apiError}
+      loading={loading}
+    />
+  );
 }
 
 export default Home;
