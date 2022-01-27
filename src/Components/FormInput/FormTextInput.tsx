@@ -9,6 +9,7 @@ interface Props {
   readonly?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -16,6 +17,11 @@ const useStyles = makeStyles((theme: Theme) =>
     input: {
       "& .MuiOutlinedInput-notchedOutline": {
         borderRadius: "15px",
+      },
+    },
+    pointer: {
+      "& .MuiOutlinedInput-input": {
+        cursor: "pointer",
       },
     },
   })
@@ -27,7 +33,12 @@ function FormTextInput(props: Props) {
   return (
     <div style={{ ...props.containerStyle }}>
       <TextField
-        InputProps={{ className: classes.input, readOnly: props.readonly }}
+        InputProps={{
+          className: [classes.input, props.readonly && classes.pointer].join(
+            " "
+          ),
+          readOnly: props.readonly,
+        }}
         variant="outlined"
         fullWidth
         label={props.label}
@@ -35,6 +46,7 @@ function FormTextInput(props: Props) {
         onChange={props.onChange}
         value={props.value}
         sx={{ borderRadius: "15px", background: "rgb(255, 255, 255)" }}
+        onClick={(event) => props.onClick && props.onClick(event)}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material";
+import { Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useState } from "react";
 import { LoginType } from "../../Api/ApiResponseTypes";
@@ -7,7 +7,9 @@ import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
 
 interface Props {
-  onSubmit: (registerDetails: LoginType) => void;
+  onSubmit: (loginDetails: LoginType) => void;
+  errors: string[];
+  loading?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,9 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "rgba(255, 255, 255, 0.57)",
       borderRadius: "5px",
       boxShadow: "-10px 10px 20px 10px rgba(0,0,0,0.23)",
-      width: "90%",
+      width: "70%",
       border: "#FFFFFF solid 2px",
       marginBottom: "20px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
     },
   })
 );
@@ -34,30 +40,53 @@ function LoginContainer(props: Props) {
 
   return (
     <div className={classes.container}>
-      <FormTextLabel text="Username" textVariant="h6" fontWeight="bold" />
-      <FormTextInput
-        placeHolderText="eg www.shortUrl.com"
-        onChange={(event) => {
-          setLoginDetails({
-            ...loginDetails,
-            username: event.target.value,
-          });
-        }}
-      />
-      <FormTextLabel text="Password" textVariant="h6" fontWeight="bold" />
-      <FormTextInput
-        placeHolderText="eg www.shortUrl.com"
-        onChange={(event) => {
-          setLoginDetails({
-            ...loginDetails,
-            password: event.target.value,
-          });
-        }}
-      />
-      <FormButton
-        text="Register"
-        onClick={() => props.onSubmit(loginDetails)}
-      />
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        textAlign="center"
+        style={{ marginBottom: "20px" }}
+      >
+        Login
+      </Typography>
+      <div style={{ width: "80%" }}>
+        <FormTextLabel text="Username" textVariant="h6" fontWeight="bold" />
+        <FormTextInput
+          placeHolderText="eg www.shortUrl.com"
+          onChange={(event) => {
+            setLoginDetails({
+              ...loginDetails,
+              username: event.target.value,
+            });
+          }}
+          containerStyle={{ marginBottom: "30px" }}
+        />
+        <FormTextLabel text="Password" textVariant="h6" fontWeight="bold" />
+        <FormTextInput
+          placeHolderText="eg www.shortUrl.com"
+          onChange={(event) => {
+            setLoginDetails({
+              ...loginDetails,
+              password: event.target.value,
+            });
+          }}
+        />
+        {props.errors.length > 0 &&
+          props.errors.map((value) => (
+            <Typography
+              color="red"
+              fontWeight="bold"
+              fontStyle="italic"
+              textAlign="center"
+              style={{ marginTop: "15px" }}
+            >
+              {value}
+            </Typography>
+          ))}
+        <FormButton
+          text="Register"
+          onClick={() => props.onSubmit(loginDetails)}
+        />
+      </div>
     </div>
   );
 }

@@ -16,24 +16,39 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Register(props: Props) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<string[]>(new Array<string>());
 
   const navigate = useNavigate();
 
   const classes = useStyles();
 
+  console.log(errors);
+
   const onSubmit = (registerDetails: RegisterType) => {
     setLoading(true);
+    setErrors(new Array<string>());
 
-    AuthApi.Register(registerDetails).then((response) => {
-      setLoading(false);
+    AuthApi.Register(registerDetails)
+      .then((response) => {
+        setLoading(false);
+        navigate("/app/");
+      })
+      .catch((error) => {
+        setLoading(false);
 
-      // Link to created short url screen
-    });
+        let newErrors = new Array<string>();
 
-    navigate("/app/");
+        for (let [key, value] of Object.entries(error.response.data.result)) {
+          newErrors.push(value as string);
+        }
+
+        setErrors(newErrors);
+      });
   };
 
-  return <RegisterContainer onSubmit={onSubmit} />;
+  return (
+    <RegisterContainer onSubmit={onSubmit} loading={loading} errors={errors} />
+  );
 }
 
 export default Register;

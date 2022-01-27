@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Login(props: Props) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<string[]>(new Array<string>());
 
   const navigate = useNavigate();
 
@@ -23,17 +24,26 @@ function Login(props: Props) {
 
   const onSubmit = (loginDetails: LoginType) => {
     setLoading(true);
+    setErrors(new Array<string>());
 
-    AuthApi.Login(loginDetails).then((response) => {
-      setLoading(false);
+    AuthApi.Login(loginDetails)
+      .then((response) => {
+        setLoading(false);
+        navigate("/app/");
+      })
+      .catch((error) => {
+        setLoading(false);
 
-      // Link to created short url screen
-    });
+        let newErrors = new Array<string>();
+        newErrors.push(error.response.data.message);
 
-    navigate("/app/");
+        setErrors(newErrors);
+      });
   };
 
-  return <LoginContainer onSubmit={onSubmit} />;
+  return (
+    <LoginContainer onSubmit={onSubmit} loading={loading} errors={errors} />
+  );
 }
 
 export default Login;
