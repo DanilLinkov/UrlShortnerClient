@@ -1,10 +1,11 @@
 import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RegisterType } from "../Api/ApiResponseTypes";
 import AuthApi from "../Api/AuthApi";
 import RegisterContainer from "../Components/RegisterForm/RegisterContainer";
+import AuthContext from "../Context/AuthContext";
 
 interface Props {}
 
@@ -19,10 +20,18 @@ function Register(props: Props) {
   const [errors, setErrors] = useState<string[]>(new Array<string>());
 
   const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    AuthApi.CheckLogin().then((response) => {
+      if (response.data.result) {
+        authContext.setUser(response.data.result);
+        navigate("/app/");
+      }
+    });
+  }, [authContext, navigate]);
 
   const classes = useStyles();
-
-  console.log(errors);
 
   const onSubmit = (registerDetails: RegisterType) => {
     setLoading(true);

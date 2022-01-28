@@ -4,7 +4,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderButton from "./HeaderButton";
 
-interface Props {}
+interface Props {
+  loggedIn: boolean;
+  logout: () => void;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,25 +31,36 @@ function HeaderButtonGroup(props: Props) {
         onClick={() => {
           navigate("/app/");
         }}
-      ></HeaderButton>
+      />
       <HeaderButton
         text="My URLs"
         onClick={() => {
           navigate("/app/myurls");
         }}
-      ></HeaderButton>
-      <HeaderButton
-        text="Register"
-        onClick={() => {
-          navigate("/app/register");
-        }}
-      ></HeaderButton>
-      <HeaderButton
-        text="Log in"
-        onClick={() => {
-          navigate("/app/login");
-        }}
-      ></HeaderButton>
+      />
+      {props.loggedIn ? (
+        <HeaderButton
+          text="Log out"
+          onClick={() => {
+            props.logout();
+          }}
+        />
+      ) : (
+        <>
+          <HeaderButton
+            text="Register"
+            onClick={() => {
+              navigate("/app/register");
+            }}
+          />
+          <HeaderButton
+            text="Log in"
+            onClick={() => {
+              navigate("/app/login");
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }

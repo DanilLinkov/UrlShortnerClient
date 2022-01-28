@@ -1,9 +1,12 @@
 import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ShortUrlType } from "../Api/ApiResponseTypes";
+import AuthApi from "../Api/AuthApi";
 import ShortUrlApi from "../Api/ShortUrlApi";
 import MyUrlsContainer from "../Components/MyUrls/MyUrlsContainer";
+import AuthContext from "../Context/AuthContext";
 
 interface Props {}
 
@@ -15,6 +18,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function MyUrls(props: Props) {
   const classes = useStyles();
+
+  // const navigate = useNavigate();
+  // const authContext = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   AuthApi.CheckLogin().then((response) => {
+  //     if (response.data.result) {
+  //       authContext.setUser(response.data.result);
+  //     }
+  //   });
+  // }, []);
 
   const [myUrls, setMyUrls] = useState<ShortUrlType[]>();
 

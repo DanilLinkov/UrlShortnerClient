@@ -26,7 +26,7 @@ function FormButton(props: Props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.buttonContainer}>
+    <div className={classes.buttonContainer} style={{ ...props.style }}>
       <LoadingButton
         variant="contained"
         size="large"

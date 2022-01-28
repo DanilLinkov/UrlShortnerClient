@@ -9,6 +9,12 @@ import {
 const API_URL = "https://localhost:6001/api";
 
 class AuthApi {
+  CheckLogin() {
+    return axios.get<LoginResponseType>(API_URL + "/login", {
+      withCredentials: true,
+    });
+  }
+
   Login(login: LoginType) {
     return axios.post<LoginResponseType>(API_URL + "/login", login, {
       withCredentials: true,
@@ -22,7 +28,7 @@ class AuthApi {
   }
 
   Logout() {
-    return axios.post<LoginResponseType>(API_URL + "/logout", {
+    return axios.post<LoginResponseType>(API_URL + "/logout", null, {
       withCredentials: true,
     });
   }

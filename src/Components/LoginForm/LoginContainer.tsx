@@ -82,10 +82,7 @@ function LoginContainer(props: Props) {
               {value}
             </Typography>
           ))}
-        <FormButton
-          text="Register"
-          onClick={() => props.onSubmit(loginDetails)}
-        />
+        <FormButton text="Login" onClick={() => props.onSubmit(loginDetails)} />
       </div>
     </div>
   );

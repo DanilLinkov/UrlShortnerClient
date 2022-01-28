@@ -95,7 +95,9 @@ function CreateShortUrlFormContainer(props: Props) {
     }
 
     if (!isError) {
-      props.onSubmit(shortUrl);
+      const shortUrlToSubmit = { ...shortUrl, longUrl: longUrl };
+
+      props.onSubmit(shortUrlToSubmit);
     }
   };
 

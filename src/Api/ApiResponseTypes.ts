@@ -1,3 +1,7 @@
+export type UserType = {
+  username: string;
+};
+
 export type LoginType = {
   username: string;
   password: string;
@@ -11,6 +15,7 @@ export type RegisterType = {
 export type LoginResponseType = {
   statusCode: number;
   message: string;
+  result: UserType;
 };
 
 export type RegisterResponseType = {
