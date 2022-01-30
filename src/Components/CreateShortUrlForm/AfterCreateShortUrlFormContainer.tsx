@@ -109,9 +109,9 @@ function AfterCreateShortUrlFormContainer(props: Props) {
         />
         <FormTextInput
           readonly
-          value={props.item?.result.shortenedUrl}
+          value={props.item?.result.shortenedUrlId}
           onClick={(event) => {
-            copyToClipBoard(props.item?.result.shortenedUrl);
+            copyToClipBoard(props.item?.result.shortenedUrlId);
             setAnchorEl2(event.currentTarget);
             setTimeout(() => setAnchorEl2(null), 800);
           }}

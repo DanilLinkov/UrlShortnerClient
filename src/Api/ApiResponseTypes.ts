@@ -45,7 +45,7 @@ export type StatusCodeResponseType = {
 
 export type ShortUrlType = {
   longUrl: string;
-  shortenedUrl: string;
+  shortenedUrlId: string;
   creationDate: Date;
   expirationDate: Date;
   uses: number;
@@ -59,10 +59,10 @@ export type CreateShortUrlType = {
 
 export type UpdateShortUrlType = {
   longUrl: string;
-  shortenedUrl: string;
+  shortenedUrlId: string;
   expirationDate: Date;
 };
 
 export type DeleteShortUrlType = {
-  shortenedUrl: string;
+  shortenedUrlId: string;
 };

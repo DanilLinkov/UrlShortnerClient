@@ -23,13 +23,17 @@ function Register(props: Props) {
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    AuthApi.CheckLogin().then((response) => {
-      if (response.data.result) {
-        authContext.setUser(response.data.result);
-        navigate("/app/");
-      }
-    });
-  }, [authContext, navigate]);
+    AuthApi.CheckLogin()
+      .then((response) => {
+        if (response.data.result) {
+          authContext.setUser(response.data.result);
+          navigate("/app/");
+        }
+      })
+      .catch(() => {
+        authContext.setUser(null);
+      });
+  }, []);
 
   const classes = useStyles();
 

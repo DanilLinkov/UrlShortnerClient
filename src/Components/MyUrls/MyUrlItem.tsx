@@ -63,7 +63,7 @@ function MyUrlItem(props: Props) {
               fontSize="1.3em"
               fontFamily="sans-serif"
             >
-              {props.item.shortenedUrl}
+              {props.item.shortenedUrlId}
             </Typography>
             <Typography
               textAlign="start"
@@ -122,7 +122,7 @@ function MyUrlItem(props: Props) {
               variant="contained"
               endIcon={<ContentCopyIcon />}
               onClick={(event) => {
-                copyToClipBoard(props.item.shortenedUrl);
+                copyToClipBoard(props.item.shortenedUrlId);
                 setAnchorEl(event.currentTarget);
                 setTimeout(() => setAnchorEl(null), 500);
               }}

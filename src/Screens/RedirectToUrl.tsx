@@ -1,13 +1,15 @@
 import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   GetSingleCreatedShortUrlsType,
   ShortUrlType,
 } from "../Api/ApiResponseTypes";
+import AuthApi from "../Api/AuthApi";
 import ShortUrlApi from "../Api/ShortUrlApi";
 import RedirectionToUrlPromtContainer from "../Components/RedirectionToUrl/RedirectionToUrlPromtContainer";
+import AuthContext from "../Context/AuthContext";
 
 interface Props {}
 

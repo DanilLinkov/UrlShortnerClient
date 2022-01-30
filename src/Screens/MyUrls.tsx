@@ -19,17 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
 function MyUrls(props: Props) {
   const classes = useStyles();
 
-  // const navigate = useNavigate();
-  // const authContext = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   AuthApi.CheckLogin().then((response) => {
-  //     if (response.data.result) {
-  //       authContext.setUser(response.data.result);
-  //     }
-  //   });
-  // }, []);
-
   const [myUrls, setMyUrls] = useState<ShortUrlType[]>();
 
   useEffect(() => {
@@ -40,9 +29,11 @@ function MyUrls(props: Props) {
 
   const onDelete = (item: ShortUrlType) => {
     ShortUrlApi.DeleteCreatedShortUrl({
-      shortenedUrl: item.shortenedUrl,
+      shortenedUrlId: item.shortenedUrlId,
     }).then((response) => {
-      setMyUrls(myUrls?.filter((i) => i.shortenedUrl !== item.shortenedUrl));
+      setMyUrls(
+        myUrls?.filter((i) => i.shortenedUrlId !== item.shortenedUrlId)
+      );
     });
   };
 
