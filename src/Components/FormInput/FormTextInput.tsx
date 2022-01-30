@@ -44,7 +44,7 @@ function FormTextInput(props: Props) {
         label={props.label}
         placeholder={props.placeHolderText}
         onChange={props.onChange}
-        value={props.value}
+        defaultValue={props.value}
         sx={{ borderRadius: "15px", background: "rgb(255, 255, 255)" }}
         onClick={(event) => props.onClick && props.onClick(event)}
       />

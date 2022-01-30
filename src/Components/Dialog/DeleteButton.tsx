@@ -13,7 +13,7 @@ interface Props {
   confirm?: () => void;
 }
 
-function ConfirmationDialog(props: Props) {
+function DeleteButton(props: Props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -68,4 +68,4 @@ function ConfirmationDialog(props: Props) {
   );
 }
 
-export default ConfirmationDialog;
+export default DeleteButton;

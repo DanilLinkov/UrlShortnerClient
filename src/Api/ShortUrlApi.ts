@@ -24,7 +24,7 @@ class ShortUrlApi {
   }
 
   UpdateShortUrl(updateShortUrl: UpdateShortUrlType) {
-    return axios.put<StatusCodeResponseType>(API_URL, updateShortUrl, {
+    return axios.put<GetSingleCreatedShortUrlsType>(API_URL, updateShortUrl, {
       withCredentials: true,
     });
   }
