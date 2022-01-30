@@ -43,8 +43,6 @@ function CreateShortUrlFormContainer(props: Props) {
     expirationDate: minDate,
   });
 
-  const [customIdError, setCustomIdError] = useState<string>("");
-  const [longUrlError, setLongUrlError] = useState<string>("");
   const [dateError, setDateError] = useState<string>("");
 
   const setCustomId = (customId: string) => {
@@ -67,12 +65,7 @@ function CreateShortUrlFormContainer(props: Props) {
   };
 
   const onSubmitForm = () => {
-    let isError = false;
-
     var longUrl = shortUrl.longUrl;
-
-    setCustomIdError("");
-    setLongUrlError("");
 
     if (
       !(
@@ -84,35 +77,24 @@ function CreateShortUrlFormContainer(props: Props) {
       longUrl = "http://" + longUrl;
     }
 
-    if (!isValidURL(longUrl)) {
-      setLongUrlError("Invalid URL format");
-      isError = true;
-    }
+    const shortUrlToSubmit = { ...shortUrl, longUrl: longUrl };
 
-    if (shortUrl.customId!!.length > 0 && shortUrl.customId!!.length < 4) {
-      setCustomIdError("Custom ID must be at least 4 characters long");
-      isError = true;
-    }
-
-    if (!isError) {
-      const shortUrlToSubmit = { ...shortUrl, longUrl: longUrl };
-
-      props.onSubmit(shortUrlToSubmit);
-    }
+    props.onSubmit(shortUrlToSubmit);
   };
 
-  function isValidURL(str: string) {
-    var pattern = new RegExp(
-      "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
-      "i"
-    ); // fragment locator
-    return !!pattern.test(str);
-  }
+  const getApiErrorType = () => {
+    if (props.apiError.includes("Custom Id")) {
+      return "customId";
+    } else if (props.apiError.includes("URL")) {
+      return "longUrl";
+    } else if (props.apiError.includes("Expiration Date")) {
+      return "expirationDate";
+    } else if (props.apiError.length <= 0) {
+      return "";
+    } else {
+      return "Internal error";
+    }
+  };
 
   return (
     <div className={classes.buttonsContainer}>
@@ -129,19 +111,18 @@ function CreateShortUrlFormContainer(props: Props) {
       <FormTextInput
         placeHolderText="eg www.shortUrl.com"
         onChange={(event) => {
-          setLongUrlError("");
           setLongUrl(event.target.value);
         }}
         containerStyle={{ width: "100%" }}
       />
-      {longUrlError.length > 0 && (
+      {getApiErrorType() === "longUrl" && (
         <Typography
           color="red"
           fontWeight="bold"
           fontStyle="italic"
           style={{ marginTop: "5px" }}
         >
-          {longUrlError}
+          {props.apiError}
         </Typography>
       )}
       <div style={{ width: "100%" }}>
@@ -188,14 +169,14 @@ function CreateShortUrlFormContainer(props: Props) {
               />
             </Grid>
           </Grid>
-          {customIdError.length > 0 && (
+          {getApiErrorType() === "customId" && (
             <Typography
               color="red"
               fontWeight="bold"
               fontStyle="italic"
               style={{ marginTop: "5px" }}
             >
-              {customIdError}
+              {props.apiError}
             </Typography>
           )}
         </div>
@@ -237,7 +218,7 @@ function CreateShortUrlFormContainer(props: Props) {
           disabled={props.loading}
           loading={props.loading}
         />
-        {props.apiError.length > 0 && (
+        {getApiErrorType() === "Internal error" && (
           <Typography
             color="red"
             fontWeight="bold"
