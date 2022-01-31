@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Button, Theme } from "@mui/material";
+import { Button, buttonClasses, SxProps, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
 
@@ -9,6 +9,7 @@ interface Props {
   style?: React.CSSProperties;
   disabled?: boolean;
   loading?: boolean;
+  buttonSx?: SxProps<Theme> | undefined;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,6 +34,7 @@ function FormButton(props: Props) {
         onClick={props.onClick}
         disabled={props.disabled}
         loading={props.loading}
+        sx={{ ...props.buttonSx }}
       >
         {props.text}
       </LoadingButton>

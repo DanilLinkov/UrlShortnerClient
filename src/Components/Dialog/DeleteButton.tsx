@@ -32,6 +32,10 @@ function DeleteButton(props: Props) {
         variant="contained"
         onClick={handleClickOpen}
         endIcon={<DeleteIcon />}
+        sx={{
+          backgroundColor: "#E16161",
+          "&:hover": { backgroundColor: "#FC4C4C" },
+        }}
       >
         Delete
       </Button>

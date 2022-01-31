@@ -30,6 +30,11 @@ function RedirectToUrl(props: Props) {
   useEffect(() => {
     const shortUrlId = location.pathname.slice(1);
 
+    if (shortUrlId.length <= 0) {
+      setError("Invalid short url id");
+      return;
+    }
+
     ShortUrlApi.GetShortUrlIdLongUrl(shortUrlId)
       .then((response) => {
         setShortUrl(response.data.result);

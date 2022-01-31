@@ -27,13 +27,19 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     itemContainer: {
-      padding: "25px",
-      backgroundColor: "rgba(255, 255, 255, 0.57)",
-      borderRadius: "20px",
-      boxShadow: "-10px 10px 20px 10px rgba(0,0,0,0.23)",
       width: "90%",
-      border: "#FFFFFF solid 2px",
       marginBottom: "20px",
+      padding: "4%",
+      backgroundColor: "rgba( 255, 255, 255, 0.1 )",
+      borderRadius: "4px",
+      boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+      border: "1px solid rgba(255, 255, 255, 0.5)",
+      backdropFilter: "blur( 50px )",
+      WebkitBackdropFilter: "blur( 50px )",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
     },
   })
 );
@@ -104,6 +110,7 @@ function MyUrlItemEdit(props: Props) {
           textAlign: "start",
           marginBottom: "5px",
         }}
+        textColor="white"
       />
       <FormTextInput
         value={props.item.longUrl}
@@ -128,12 +135,13 @@ function MyUrlItemEdit(props: Props) {
             text="Update Long URL"
             textVariant="h6"
             fontWeight="bold"
+            textColor="white"
           />
           <FormTextLabel
             text="short URL expires in 1 day from creation by default"
             textVariant="body1"
             fontStyle="italic"
-            textColor="rgba(0,0,0,0.54)"
+            textColor="rgba(255,255,255,0.9)"
             containerStyle={{ marginBottom: "10px" }}
           />
           <DateInput
@@ -166,15 +174,23 @@ function MyUrlItemEdit(props: Props) {
           <FormButton
             text="Update"
             onClick={() => onSubmitForm()}
-            disabled={props.loading}
+            disabled={props.loading || dateError.length > 0}
             loading={props.loading}
             style={{ marginRight: "20px" }}
+            buttonSx={{
+              backgroundColor: "#2BE49F",
+              "&:hover": { backgroundColor: "#4AF6B6" },
+            }}
           />
           <FormButton
             text="Cancel"
             onClick={() => props.onCancel()}
             disabled={props.loading}
             loading={props.loading}
+            buttonSx={{
+              backgroundColor: "#E16161",
+              "&:hover": { backgroundColor: "#FC4C4C" },
+            }}
           />
         </div>
         {getApiErrorType() === "Internal error" && (

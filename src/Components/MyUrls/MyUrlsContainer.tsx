@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material";
+import { Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
 import { ShortUrlType } from "../../Api/ApiResponseTypes";
@@ -26,15 +26,21 @@ function MyUrlsContainer(props: Props) {
 
   return (
     <div className={classes.container}>
-      {props.myUrls?.map((item, index) => {
-        return (
-          <MyUrlItem
-            key={index}
-            item={item}
-            onDelete={() => props.onDelete(item)}
-          />
-        );
-      })}
+      {props.myUrls && props.myUrls.length <= 0 && (
+        <Typography>
+          You have not shortened any URLs, Go to the "Home" page to try it out.
+        </Typography>
+      )}
+      {props.myUrls &&
+        props.myUrls.map((item, index) => {
+          return (
+            <MyUrlItem
+              key={index}
+              item={item}
+              onDelete={() => props.onDelete(item)}
+            />
+          );
+        })}
     </div>
   );
 }

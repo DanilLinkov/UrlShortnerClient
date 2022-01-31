@@ -9,6 +9,7 @@ interface Props {
   readonly?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
+  defaultValue?: string;
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
@@ -17,6 +18,16 @@ const useStyles = makeStyles((theme: Theme) =>
     input: {
       "& .MuiOutlinedInput-notchedOutline": {
         borderRadius: "15px",
+        border: "1px solid rgba(255, 255, 255, 0.5)",
+      },
+      "&:hover .MuiOutlinedInput-input": {
+        borderRadius: "15px",
+        backgroundColor: "rgba(255, 255, 255, 0.2)",
+        color: "rgb(255, 255, 255)",
+        transition: "background-color 0.3s",
+      },
+      "&:focus .MuiOutlinedInput-root": {
+        borderColor: "red",
       },
     },
     pointer: {
@@ -44,8 +55,11 @@ function FormTextInput(props: Props) {
         label={props.label}
         placeholder={props.placeHolderText}
         onChange={props.onChange}
-        defaultValue={props.value}
-        sx={{ borderRadius: "15px", background: "rgb(255, 255, 255)" }}
+        value={props.value}
+        defaultValue={props.defaultValue}
+        sx={{
+          borderRadius: "15px",
+        }}
         onClick={(event) => props.onClick && props.onClick(event)}
       />
     </div>

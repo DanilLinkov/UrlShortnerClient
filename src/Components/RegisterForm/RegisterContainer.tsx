@@ -15,13 +15,15 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      padding: "20px",
-      backgroundColor: "rgba(255, 255, 255, 0.57)",
-      borderRadius: "5px",
-      boxShadow: "-10px 10px 20px 10px rgba(0,0,0,0.23)",
-      width: "70%",
-      border: "#FFFFFF solid 2px",
+      width: "60%",
       marginBottom: "20px",
+      padding: "4%",
+      backgroundColor: "rgba( 255, 255, 255, 0.1 )",
+      borderRadius: "4px",
+      boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+      border: "1px solid rgba(255, 255, 255, 0.5)",
+      backdropFilter: "blur( 50px )",
+      WebkitBackdropFilter: "blur( 50px )",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -45,6 +47,7 @@ function RegisterContainer(props: Props) {
         fontWeight="bold"
         textAlign="center"
         style={{ marginBottom: "20px" }}
+        color="white"
       >
         Register
       </Typography>
@@ -54,6 +57,7 @@ function RegisterContainer(props: Props) {
           textVariant="h6"
           fontWeight="bold"
           containerStyle={{ textAlign: "start" }}
+          textColor="white"
         />
         <FormTextInput
           placeHolderText="eg www.shortUrl.com"
@@ -65,7 +69,12 @@ function RegisterContainer(props: Props) {
           }}
           containerStyle={{ marginBottom: "30px" }}
         />
-        <FormTextLabel text="Password" textVariant="h6" fontWeight="bold" />
+        <FormTextLabel
+          text="Password"
+          textVariant="h6"
+          fontWeight="bold"
+          textColor="white"
+        />
         <FormTextInput
           placeHolderText="eg www.shortUrl.com"
           onChange={(event) => {
@@ -92,6 +101,21 @@ function RegisterContainer(props: Props) {
           onClick={() => props.onSubmit(registerDetails)}
           loading={props.loading}
           disabled={props.loading}
+          buttonSx={{
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            color: "rgba(0, 0, 0, 0.5)",
+            fontSize: "1rem",
+            border: "1px solid transparent",
+            borderRadius: "2rem",
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            transition: "background-color 0.3s",
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              border: "1px solid rgba(255, 255, 255, 1)",
+              color: "rgb(255, 255, 255)",
+            },
+          }}
         />
       </div>
     </div>

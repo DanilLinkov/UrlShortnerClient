@@ -18,11 +18,13 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonsContainer: {
       padding: "4%",
-      backgroundColor: "rgba(255, 255, 255, 0.57)",
-      borderRadius: "20px",
-      boxShadow: "-10px 10px 20px 10px rgba(0,0,0,0.23)",
+      backgroundColor: "rgba( 255, 255, 255, 0.1 )",
+      borderRadius: "4px",
+      boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+      border: "1px solid rgba(255, 255, 255, 0.5)",
+      backdropFilter: "blur( 50px )",
+      WebkitBackdropFilter: "blur( 50px )",
       width: "70%",
-      border: "#FFFFFF solid 2px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -38,7 +40,6 @@ function CreateShortUrlFormContainer(props: Props) {
   const maxDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
 
   const [shortUrl, setShortUrl] = useState<CreateShortUrlType>({
-    customId: "",
     longUrl: "",
     expirationDate: minDate,
   });
@@ -47,6 +48,11 @@ function CreateShortUrlFormContainer(props: Props) {
 
   const setCustomId = (customId: string) => {
     if (customId.length > 12) {
+      return;
+    }
+
+    if (customId.length === 0) {
+      setShortUrl({ ...shortUrl, customId: undefined });
       return;
     }
 
@@ -107,6 +113,7 @@ function CreateShortUrlFormContainer(props: Props) {
           textAlign: "start",
           marginBottom: "5px",
         }}
+        textColor="white"
       />
       <FormTextInput
         placeHolderText="eg www.shortUrl.com"
@@ -133,9 +140,17 @@ function CreateShortUrlFormContainer(props: Props) {
           containerStyle={{
             width: "100%",
             textAlign: "start",
-            marginBottom: "15px",
+            marginBottom: "5px",
             marginTop: "15px",
           }}
+          textColor="white"
+        />
+        <FormTextLabel
+          text="The short url will be in the form of https://shorturl.com/<customId>"
+          textVariant="body1"
+          fontStyle="italic"
+          textColor="rgba(255,255,255,0.9)"
+          containerStyle={{ marginBottom: "10px" }}
         />
         <div
           style={{
@@ -146,29 +161,14 @@ function CreateShortUrlFormContainer(props: Props) {
             flexDirection: "column",
           }}
         >
-          <Grid container>
-            <Grid item xs={12} sm={12} md={12} lg={3}>
-              <FormTextLabel
-                text="https://shorturl.com/"
-                textVariant="body1"
-                fontStyle="italic"
-                containerStyle={{
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={9}>
-              <FormTextInput
-                placeHolderText="eg www.shortUrl.com"
-                value={shortUrl.customId}
-                onChange={(event) => {
-                  setCustomId(event.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
+          <FormTextInput
+            placeHolderText="eg www.shortUrl.com"
+            defaultValue={shortUrl.customId}
+            onChange={(event) => {
+              setCustomId(event.target.value);
+            }}
+            containerStyle={{ width: "100%" }}
+          />
           {getApiErrorType() === "customId" && (
             <Typography
               color="red"
@@ -185,12 +185,13 @@ function CreateShortUrlFormContainer(props: Props) {
             text="Customize exipration date"
             textVariant="h6"
             fontWeight="bold"
+            textColor="white"
           />
           <FormTextLabel
             text="short URL expires in 1 day from creation by default"
             textVariant="body1"
             fontStyle="italic"
-            textColor="rgba(0,0,0,0.54)"
+            textColor="rgba(255,255,255,0.9)"
             containerStyle={{ marginBottom: "10px" }}
           />
           <DateInput
@@ -215,8 +216,23 @@ function CreateShortUrlFormContainer(props: Props) {
         <FormButton
           text="Shorten"
           onClick={() => onSubmitForm()}
-          disabled={props.loading}
+          disabled={props.loading || dateError.length > 0}
           loading={props.loading}
+          buttonSx={{
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            color: "rgba(0, 0, 0, 0.5)",
+            fontSize: "1rem",
+            border: "1px solid transparent",
+            borderRadius: "2rem",
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            transition: "background-color 0.3s",
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              border: "1px solid rgba(255, 255, 255, 1)",
+              color: "rgb(255, 255, 255)",
+            },
+          }}
         />
         {getApiErrorType() === "Internal error" && (
           <Typography

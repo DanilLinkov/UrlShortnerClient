@@ -25,14 +25,12 @@ function Header(props: Props) {
   const classes = useStyles();
 
   const authContext = useContext(AuthContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     AuthApi.CheckLogin()
       .then((response) => {
         if (response.data.result) {
           authContext.setUser(response.data.result);
-          navigate("/app/");
         }
       })
       .catch(() => {
@@ -43,6 +41,7 @@ function Header(props: Props) {
   const logout = () => {
     AuthApi.Logout().then((response) => {
       authContext.setUser(null);
+      window.location.reload();
     });
   };
 

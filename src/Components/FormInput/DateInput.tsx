@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     dateInput: {
       "& .MuiOutlinedInput-notchedOutline": {
         borderRadius: "15px",
+        border: "1px solid rgba(255, 255, 255, 0.5)",
       },
     },
   })
@@ -44,7 +45,14 @@ function DateInput(props: Props) {
               {...params}
               variant="outlined"
               fullWidth
-              sx={{ borderRadius: "15px", background: "rgb(255, 255, 255)" }}
+              sx={{
+                borderRadius: "15px",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.2)",
+                  color: "rgb(255, 255, 255)",
+                  transition: "background-color 0.3s",
+                },
+              }}
             />
           )}
           onError={(reason, value) => {
