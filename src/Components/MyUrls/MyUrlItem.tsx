@@ -144,7 +144,7 @@ function MyUrlItem(props: Props) {
                   fontFamily="sans-serif"
                   color="white"
                 >
-                  http://localhost:3000/{item.shortenedUrlId}
+                  https://shorturlclient.azurewebsites.net/{item.shortenedUrlId}
                 </Typography>
                 <Typography
                   textAlign="start"
@@ -210,7 +210,12 @@ function MyUrlItem(props: Props) {
                   xs={5}
                 >
                   <Grid item>
-                    <EmailShareButton url="https://mdnotes.azurewebsites.net/">
+                    <EmailShareButton
+                      url={
+                        "https://shorturlclient.azurewebsites.net/" +
+                        item.shortenedUrlId
+                      }
+                    >
                       <EmailIcon size={30} round={true} />
                     </EmailShareButton>
                   </Grid>
@@ -218,7 +223,10 @@ function MyUrlItem(props: Props) {
                     <FacebookShareButton
                       quote={"Check out this note mark down collection tool!"}
                       hashtag={"#MDnotes"}
-                      url="https://mdnotes.azurewebsites.net/"
+                      url={
+                        "https://shorturlclient.azurewebsites.net/" +
+                        item.shortenedUrlId
+                      }
                     >
                       <FacebookIcon size={30} round={true} />
                     </FacebookShareButton>
@@ -226,7 +234,10 @@ function MyUrlItem(props: Props) {
                   <Grid item>
                     <RedditShareButton
                       title="Note mark down collection tool"
-                      url="https://mdnotes.azurewebsites.net/"
+                      url={
+                        "https://shorturlclient.azurewebsites.net/" +
+                        item.shortenedUrlId
+                      }
                     >
                       <RedditIcon size={30} round={true} />
                     </RedditShareButton>
@@ -234,7 +245,10 @@ function MyUrlItem(props: Props) {
                   <Grid item>
                     <TwitterShareButton
                       title="Note mark down collection tool"
-                      url="https://mdnotes.azurewebsites.net/"
+                      url={
+                        "https://shorturlclient.azurewebsites.net/" +
+                        item.shortenedUrlId
+                      }
                     >
                       <TwitterIcon size={30} round={true} />
                     </TwitterShareButton>
@@ -242,7 +256,10 @@ function MyUrlItem(props: Props) {
                   <Grid item>
                     <WhatsappShareButton
                       title="Note mark down collection tool"
-                      url="https://mdnotes.azurewebsites.net/"
+                      url={
+                        "https://shorturlclient.azurewebsites.net/" +
+                        item.shortenedUrlId
+                      }
                     >
                       <WhatsappIcon size={30} round={true} />
                     </WhatsappShareButton>
@@ -279,7 +296,8 @@ function MyUrlItem(props: Props) {
                   endIcon={<ContentCopyIcon />}
                   onClick={(event) => {
                     copyToClipBoard(
-                      "http://localhost:3000/" + item.shortenedUrlId
+                      "https://shorturlclient.azurewebsites.net/" +
+                        item.shortenedUrlId
                     );
                     setCopyAnchor(event.currentTarget);
                     setTimeout(() => setCopyAnchor(null), 500);
