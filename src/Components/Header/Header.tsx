@@ -1,6 +1,6 @@
-import { Container, Theme } from "@mui/material";
+import { Container, Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthApi from "../../Api/AuthApi";
 import AuthContext from "../../Context/AuthContext";
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "flex-end",
+      justifyContent: "space-between",
       padding: "20px",
       marginBottom: "20px",
     },
@@ -23,8 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Header(props: Props) {
   const classes = useStyles();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     AuthApi.CheckLogin()
@@ -39,17 +41,40 @@ function Header(props: Props) {
   }, []);
 
   const logout = () => {
+    setLoading(true);
     AuthApi.Logout().then((response) => {
       authContext.setUser(null);
+      setLoading(false);
       window.location.reload();
     });
   };
 
-  console.log(authContext);
-
   return (
     <div className={classes.container}>
-      <HeaderButtonGroup loggedIn={authContext.user !== null} logout={logout} />
+      <Typography
+        variant="h3"
+        fontStyle="oblique"
+        fontWeight="bold"
+        color="white"
+        padding="10px"
+        borderRadius="20px"
+        sx={{
+          "&:hover": {
+            cursor: "pointer",
+          },
+          userSelect: "none",
+        }}
+        onClick={() => {
+          navigate("/app/");
+        }}
+      >
+        ShortURL
+      </Typography>
+      <HeaderButtonGroup
+        loggedIn={authContext.user !== null}
+        logout={logout}
+        loading={loading}
+      />
     </div>
   );
 }

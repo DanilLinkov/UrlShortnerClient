@@ -96,6 +96,7 @@ function LoginContainer(props: Props) {
             </Typography>
           ))}
         <FormButton
+          loading={props.loading}
           text="Login"
           onClick={() => props.onSubmit(loginDetails)}
           buttonSx={{

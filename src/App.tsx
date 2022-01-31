@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ShortUrlType, UserType } from "./Api/ApiResponseTypes";
 import ShortUrlApi from "./Api/ShortUrlApi";
+import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
 import RedirectionToUrlPromtContainer from "./Components/RedirectionToUrl/RedirectionToUrlPromtContainer";
 import AuthContext from "./Context/AuthContext";
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      marginBottom: "100px",
     },
   })
 );
@@ -33,7 +35,7 @@ function App() {
   const authContextValue = useMemo(() => ({ user, setUser }), [user]);
 
   return (
-    <div>
+    <div style={{ position: "relative", overflow: "auto" }}>
       <AuthContext.Provider value={authContextValue}>
         <Header />
       </AuthContext.Provider>
@@ -81,6 +83,7 @@ function App() {
           />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

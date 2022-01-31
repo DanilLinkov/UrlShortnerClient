@@ -113,7 +113,7 @@ function MyUrlItemEdit(props: Props) {
         textColor="white"
       />
       <FormTextInput
-        value={props.item.longUrl}
+        defaultValue={props.item.longUrl}
         onChange={(event) => {
           setLongUrl(event.target.value);
         }}

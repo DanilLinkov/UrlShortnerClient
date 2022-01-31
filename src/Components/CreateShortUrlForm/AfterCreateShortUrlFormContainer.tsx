@@ -19,11 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonsContainer: {
       padding: "4%",
-      backgroundColor: "rgba(255, 255, 255, 0.57)",
-      borderRadius: "20px",
-      boxShadow: "-10px 10px 20px 10px rgba(0,0,0,0.23)",
+      backgroundColor: "rgba( 255, 255, 255, 0.1 )",
+      borderRadius: "4px",
+      boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+      border: "1px solid rgba(255, 255, 255, 0.5)",
+      backdropFilter: "blur( 50px )",
+      WebkitBackdropFilter: "blur( 50px )",
       width: "70%",
-      border: "#FFFFFF solid 2px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -109,9 +111,11 @@ function AfterCreateShortUrlFormContainer(props: Props) {
         />
         <FormTextInput
           readonly
-          value={props.item?.result.shortenedUrlId}
+          value={"http://localhost:3000/" + props.item?.result.shortenedUrlId}
           onClick={(event) => {
-            copyToClipBoard(props.item?.result.shortenedUrlId);
+            copyToClipBoard(
+              "http://localhost:3000/" + props.item?.result.shortenedUrlId
+            );
             setAnchorEl2(event.currentTarget);
             setTimeout(() => setAnchorEl2(null), 800);
           }}
@@ -138,6 +142,21 @@ function AfterCreateShortUrlFormContainer(props: Props) {
         variant="contained"
         size="large"
         style={{ marginTop: "20px" }}
+        sx={{
+          backgroundColor: "rgba(255, 255, 255, 0.8)",
+          color: "rgba(0, 0, 0, 0.5)",
+          fontSize: "1rem",
+          border: "1px solid transparent",
+          borderRadius: "2rem",
+          fontWeight: "bold",
+          textTransform: "uppercase",
+          transition: "background-color 0.3s",
+          "&:hover": {
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            border: "1px solid rgba(255, 255, 255, 1)",
+            color: "rgb(255, 255, 255)",
+          },
+        }}
       >
         Shorten Another
       </Button>

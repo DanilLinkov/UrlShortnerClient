@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import { Button, Container, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
@@ -6,6 +7,7 @@ interface Props {
   text: string;
   onClick?: () => void;
   style?: React.CSSProperties;
+  loading?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +24,8 @@ function HeaderButton(props: Props) {
 
   return (
     <div className={classes.buttonContainer}>
-      <Button
+      <LoadingButton
+        loading={props.loading}
         size="large"
         onClick={props.onClick}
         sx={{
@@ -40,7 +43,7 @@ function HeaderButton(props: Props) {
         }}
       >
         {props.text}
-      </Button>
+      </LoadingButton>
     </div>
   );
 }

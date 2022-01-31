@@ -19,25 +19,32 @@ const useStyles = makeStyles((theme: Theme) =>
 function MyUrls(props: Props) {
   const classes = useStyles();
 
+  const [loading, setLoading] = useState(true);
   const [myUrls, setMyUrls] = useState<ShortUrlType[]>();
 
   useEffect(() => {
+    setLoading(true);
     ShortUrlApi.GetAllCreatedShortUrls().then((response) => {
       setMyUrls(response.data.result);
+      setLoading(false);
     });
   }, []);
 
   const onDelete = (item: ShortUrlType) => {
+    setLoading(true);
     ShortUrlApi.DeleteCreatedShortUrl({
       shortenedUrlId: item.shortenedUrlId,
     }).then((response) => {
       setMyUrls(
         myUrls?.filter((i) => i.shortenedUrlId !== item.shortenedUrlId)
       );
+      setLoading(false);
     });
   };
 
-  return <MyUrlsContainer myUrls={myUrls} onDelete={onDelete} />;
+  return (
+    <MyUrlsContainer myUrls={myUrls} onDelete={onDelete} loading={loading} />
+  );
 }
 
 export default MyUrls;

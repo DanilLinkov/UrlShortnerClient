@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RedirectToUrl(props: Props) {
   const classes = useStyles();
+  const [loading, setLoading] = useState<boolean>(true);
   const [shortUrl, setShortUrl] = useState<ShortUrlType>();
   const [error, setError] = useState<string>("");
 
@@ -28,6 +29,7 @@ function RedirectToUrl(props: Props) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
     const shortUrlId = location.pathname.slice(1);
 
     if (shortUrlId.length <= 0) {
@@ -38,9 +40,11 @@ function RedirectToUrl(props: Props) {
     ShortUrlApi.GetShortUrlIdLongUrl(shortUrlId)
       .then((response) => {
         setShortUrl(response.data.result);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error.response.data.message);
+        setLoading(false);
       });
   }, []);
 
@@ -61,6 +65,7 @@ function RedirectToUrl(props: Props) {
       shortUrl={shortUrl}
       onContinue={onContinue}
       onCancel={onCancel}
+      loading={loading}
     />
   );
 }

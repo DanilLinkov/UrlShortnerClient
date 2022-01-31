@@ -6,12 +6,14 @@ import { ShortUrlType } from "../../Api/ApiResponseTypes";
 import FormButton from "../Buttons/FormButton";
 import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {
   error: string;
   shortUrl?: ShortUrlType;
   onContinue: () => void;
   onCancel: () => void;
+  loading?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,7 +38,18 @@ function RedirectionToUrlPromtContainer(props: Props) {
 
   return (
     <div className={classes.container}>
-      {props.error.length > 0 ? (
+      {props.loading ? (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : props.error.length > 0 ? (
         <div
           style={{
             display: "flex",

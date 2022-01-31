@@ -7,6 +7,7 @@ import HeaderButton from "./HeaderButton";
 interface Props {
   loggedIn: boolean;
   logout: () => void;
+  loading: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,6 +45,7 @@ function HeaderButtonGroup(props: Props) {
           onClick={() => {
             props.logout();
           }}
+          loading={props.loading}
         />
       ) : (
         <>
