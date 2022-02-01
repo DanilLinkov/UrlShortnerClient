@@ -1,19 +1,8 @@
-import {
-  Button,
-  Grid,
-  IconButton,
-  Popover,
-  Theme,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, IconButton, Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import moment from "moment";
 import React, { useState } from "react";
-import {
-  CreateShortUrlType,
-  ShortUrlType,
-  UpdateShortUrlType,
-} from "../../Api/ApiResponseTypes";
+import { ShortUrlType, UpdateShortUrlType } from "../../Api/ApiResponseTypes";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ShareIcon from "@mui/icons-material/Share";
 import EditIcon from "@mui/icons-material/Edit";
@@ -35,6 +24,8 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
+import SuccessText from "../Text/SuccessText";
+import CustomPopover from "../Popover/CustomPopover";
 
 interface Props {
   item: ShortUrlType;
@@ -58,6 +49,16 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
       flexDirection: "column",
     },
+    dateTextStyle: {
+      textAlign: "end",
+      fontStyle: "italic",
+      fontFamily: "sans-serif",
+      color: "white",
+    },
+    urlTextStyle: {
+      fontFamily: "sans-serif",
+      color: "white",
+    },
   })
 );
 
@@ -71,9 +72,6 @@ function MyUrlItem(props: Props) {
 
   const [shareButtonOpen, setShareButtonOpen] = useState<boolean>(false);
 
-  const copyOpen = Boolean(copyAnchor);
-  const copyAnchorId = copyOpen ? "simple-popover" : undefined;
-
   const copyToClipBoard = (text: string) => {
     navigator.clipboard.writeText(text);
   };
@@ -83,6 +81,9 @@ function MyUrlItem(props: Props) {
 
   const [apiError, setApiError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+
+  const fullItemUrl =
+    "https://shorturlclient.azurewebsites.net/" + item.shortenedUrlId;
 
   const updateShortUrl = (updateShortUrl: UpdateShortUrlType) => {
     setApiError("");
@@ -103,6 +104,7 @@ function MyUrlItem(props: Props) {
         setLoading(false);
       });
   };
+
   return (
     <>
       {showEdit ? (
@@ -115,15 +117,12 @@ function MyUrlItem(props: Props) {
         />
       ) : (
         <div className={classes.itemContainer} style={{ position: "relative" }}>
-          {showEditedMessage && (
-            <Typography
-              variant="h6"
-              color="#38F5AE"
-              style={{ position: "absolute", top: "0px", right: "40%" }}
-            >
-              Edited successfully
-            </Typography>
-          )}
+          <SuccessText
+            display={showEditedMessage}
+            style={{ position: "absolute", top: "0px", right: "40%" }}
+          >
+            Edited successfully
+          </SuccessText>
           <Grid
             container
             justifyContent="center"
@@ -141,36 +140,19 @@ function MyUrlItem(props: Props) {
                 <Typography
                   fontWeight="bold"
                   fontSize="1.3em"
-                  fontFamily="sans-serif"
-                  color="white"
+                  className={classes.urlTextStyle}
                 >
-                  https://shorturlclient.azurewebsites.net/{item.shortenedUrlId}
+                  {fullItemUrl}
                 </Typography>
-                <Typography
-                  textAlign="start"
-                  fontWeight="normal"
-                  fontSize="1em"
-                  fontFamily="sans-serif"
-                  color="white"
-                >
+                <Typography fontSize="1em" className={classes.urlTextStyle}>
                   {item.longUrl}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography
-                  textAlign="end"
-                  fontStyle="italic"
-                  fontFamily="sans-serif"
-                  color="white"
-                >
+                <Typography className={classes.dateTextStyle}>
                   Created {moment(item.creationDate).fromNow()}
                 </Typography>
-                <Typography
-                  textAlign="end"
-                  fontStyle="italic"
-                  fontFamily="sans-serif"
-                  color="white"
-                >
+                <Typography className={classes.dateTextStyle}>
                   Expires {moment(item.expirationDate).fromNow()}
                 </Typography>
               </Grid>
@@ -179,9 +161,7 @@ function MyUrlItem(props: Props) {
           <Grid container justifyContent="center" alignItems="center">
             <Grid item xs={4} justifyContent="flex-start" alignItems="center">
               <Typography
-                style={{
-                  display: "inline",
-                }}
+                display="inline"
                 fontWeight="bold"
                 textAlign="center"
                 fontSize="1.2em"
@@ -210,56 +190,39 @@ function MyUrlItem(props: Props) {
                   xs={5}
                 >
                   <Grid item>
-                    <EmailShareButton
-                      url={
-                        "https://shorturlclient.azurewebsites.net/" +
-                        item.shortenedUrlId
-                      }
-                    >
+                    <EmailShareButton url={fullItemUrl}>
                       <EmailIcon size={30} round={true} />
                     </EmailShareButton>
                   </Grid>
                   <Grid item>
                     <FacebookShareButton
-                      quote={"Check out this note mark down collection tool!"}
-                      hashtag={"#MDnotes"}
-                      url={
-                        "https://shorturlclient.azurewebsites.net/" +
-                        item.shortenedUrlId
-                      }
+                      quote={"Checkout my short url: " + fullItemUrl}
+                      hashtag={"#ShortUrl"}
+                      url={fullItemUrl}
                     >
                       <FacebookIcon size={30} round={true} />
                     </FacebookShareButton>
                   </Grid>
                   <Grid item>
                     <RedditShareButton
-                      title="Note mark down collection tool"
-                      url={
-                        "https://shorturlclient.azurewebsites.net/" +
-                        item.shortenedUrlId
-                      }
+                      title={"Checkout my short url: " + fullItemUrl}
+                      url={fullItemUrl}
                     >
                       <RedditIcon size={30} round={true} />
                     </RedditShareButton>
                   </Grid>
                   <Grid item>
                     <TwitterShareButton
-                      title="Note mark down collection tool"
-                      url={
-                        "https://shorturlclient.azurewebsites.net/" +
-                        item.shortenedUrlId
-                      }
+                      title={"Checkout my short url: " + fullItemUrl}
+                      url={fullItemUrl}
                     >
                       <TwitterIcon size={30} round={true} />
                     </TwitterShareButton>
                   </Grid>
                   <Grid item>
                     <WhatsappShareButton
-                      title="Note mark down collection tool"
-                      url={
-                        "https://shorturlclient.azurewebsites.net/" +
-                        item.shortenedUrlId
-                      }
+                      title={"Checkout my short url: " + fullItemUrl}
+                      url={fullItemUrl}
                     >
                       <WhatsappIcon size={30} round={true} />
                     </WhatsappShareButton>
@@ -295,10 +258,7 @@ function MyUrlItem(props: Props) {
                   variant="contained"
                   endIcon={<ContentCopyIcon />}
                   onClick={(event) => {
-                    copyToClipBoard(
-                      "https://shorturlclient.azurewebsites.net/" +
-                        item.shortenedUrlId
-                    );
+                    copyToClipBoard(fullItemUrl);
                     setCopyAnchor(event.currentTarget);
                     setTimeout(() => setCopyAnchor(null), 500);
                   }}
@@ -309,11 +269,10 @@ function MyUrlItem(props: Props) {
                 >
                   Copy
                 </Button>
-                <Popover
-                  id={copyAnchorId}
-                  open={copyOpen}
-                  anchorEl={copyAnchor}
+                <CustomPopover
+                  text="Copied shortened url to clipboard."
                   onClose={() => setCopyAnchor(null)}
+                  anchorEl={copyAnchor}
                   anchorOrigin={{
                     vertical: "center",
                     horizontal: "left",
@@ -322,11 +281,7 @@ function MyUrlItem(props: Props) {
                     vertical: "center",
                     horizontal: "right",
                   }}
-                >
-                  <Typography sx={{ p: 2 }}>
-                    Copied shortened url to clipboard.
-                  </Typography>
-                </Popover>
+                />
               </Grid>
               <Grid item>
                 <Button

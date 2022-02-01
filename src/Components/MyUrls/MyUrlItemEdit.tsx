@@ -15,6 +15,9 @@ import FormButton from "../Buttons/FormButton";
 import DateInput from "../FormInput/DateInput";
 import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
+import InputLabel from "../Text/InputLabel";
+import ErrorText from "../Text/ErrorText";
+import InputSubLabel from "../Text/InputSubLabel";
 
 interface Props {
   item: ShortUrlType;
@@ -101,49 +104,24 @@ function MyUrlItemEdit(props: Props) {
 
   return (
     <div className={classes.itemContainer}>
-      <FormTextLabel
-        text="Update Long URL"
-        textVariant="h6"
-        fontWeight="bold"
-        containerStyle={{
-          width: "100%",
-          textAlign: "start",
-          marginBottom: "5px",
-        }}
-        textColor="white"
-      />
+      <InputLabel>Update Long URL</InputLabel>
       <FormTextInput
-        defaultValue={props.item.longUrl}
+        placeHolderText="eg www.shortUrl.com"
+        defaultValue={shortUrl.longUrl}
         onChange={(event) => {
           setLongUrl(event.target.value);
         }}
         containerStyle={{ width: "100%" }}
       />
-      {getApiErrorType() === "longUrl" && (
-        <Typography
-          color="red"
-          fontWeight="bold"
-          fontStyle="italic"
-          style={{ marginTop: "5px" }}
-        >
-          {props.apiError}
-        </Typography>
-      )}
+      <ErrorText display={getApiErrorType() === "longUrl"}>
+        {props.apiError}
+      </ErrorText>
       <div style={{ width: "100%", marginTop: "15px" }}>
         <div>
-          <FormTextLabel
-            text="Update Long URL"
-            textVariant="h6"
-            fontWeight="bold"
-            textColor="white"
-          />
-          <FormTextLabel
-            text="short URL expires in 1 day from creation by default"
-            textVariant="body1"
-            fontStyle="italic"
-            textColor="rgba(255,255,255,0.9)"
-            containerStyle={{ marginBottom: "10px" }}
-          />
+          <InputLabel>Update expiration Date</InputLabel>
+          <InputSubLabel>
+            The short URL expires 1 day after creation by default
+          </InputSubLabel>
           <DateInput
             value={shortUrl.expirationDate}
             onChange={(date) => setExpirationDate(date)}
@@ -151,17 +129,7 @@ function MyUrlItemEdit(props: Props) {
             maxDate={maxDate}
             setDateError={setDateError}
           />
-          {dateError.length > 0 && (
-            <Typography
-              color="red"
-              fontWeight="bold"
-              fontStyle="italic"
-              textAlign="center"
-              style={{ marginTop: "5px" }}
-            >
-              {dateError}
-            </Typography>
-          )}
+          <ErrorText display={dateError.length > 0}>{dateError}</ErrorText>
         </div>
         <div
           style={{
@@ -172,11 +140,11 @@ function MyUrlItemEdit(props: Props) {
           }}
         >
           <FormButton
+            style={{ marginRight: "20px" }}
             text="Update"
             onClick={() => onSubmitForm()}
             disabled={props.loading || dateError.length > 0}
             loading={props.loading}
-            style={{ marginRight: "20px" }}
             buttonSx={{
               backgroundColor: "#2BE49F",
               "&:hover": { backgroundColor: "#4AF6B6" },

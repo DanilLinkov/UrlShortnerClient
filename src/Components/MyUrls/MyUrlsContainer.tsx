@@ -36,7 +36,7 @@ function MyUrlsContainer(props: Props) {
           fontStyle="italic"
           textAlign="center"
           variant="h6"
-          style={{ marginTop: "15px" }}
+          paddingTop="15px"
         >
           You have not shortened any URLs, Go to the "Shorten URL" page to
           create some.

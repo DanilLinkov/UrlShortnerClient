@@ -7,9 +7,9 @@ import FormButton from "../Buttons/FormButton";
 import DateInput from "../FormInput/DateInput";
 import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
-import ErrorText from "./Text/ErrorText";
-import InputLabel from "./Text/InputLabel";
-import InputSubLabel from "./Text/InputSubLabel";
+import ErrorText from "../Text/ErrorText";
+import InputLabel from "../Text/InputLabel";
+import InputSubLabel from "../Text/InputSubLabel";
 
 interface Props {
   onSubmit: (createShortUrl: CreateShortUrlType) => void;

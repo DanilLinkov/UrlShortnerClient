@@ -1,24 +1,9 @@
-import { Theme } from "@mui/material";
-import { createStyles, makeStyles } from "@mui/styles";
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { ShortUrlType } from "../Api/ApiResponseTypes";
-import AuthApi from "../Api/AuthApi";
 import ShortUrlApi from "../Api/ShortUrlApi";
 import MyUrlsContainer from "../Components/MyUrls/MyUrlsContainer";
-import AuthContext from "../Context/AuthContext";
 
-interface Props {}
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {},
-  })
-);
-
-function MyUrls(props: Props) {
-  const classes = useStyles();
-
+function MyUrls() {
   const [loading, setLoading] = useState(true);
   const [myUrls, setMyUrls] = useState<ShortUrlType[]>();
 
@@ -34,12 +19,17 @@ function MyUrls(props: Props) {
     setLoading(true);
     ShortUrlApi.DeleteCreatedShortUrl({
       shortenedUrlId: item.shortenedUrlId,
-    }).then((response) => {
-      setMyUrls(
-        myUrls?.filter((i) => i.shortenedUrlId !== item.shortenedUrlId)
-      );
-      setLoading(false);
-    });
+    })
+      .then((response) => {
+        setMyUrls(
+          myUrls?.filter((i) => i.shortenedUrlId !== item.shortenedUrlId)
+        );
+        setLoading(false);
+      })
+      .catch((error) => {
+        window.location.reload();
+        setLoading(false);
+      });
   };
 
   return (

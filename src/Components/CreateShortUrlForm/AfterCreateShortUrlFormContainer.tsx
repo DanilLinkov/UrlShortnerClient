@@ -11,8 +11,8 @@ import FormButton from "../Buttons/FormButton";
 import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
 import CustomPopover from "../Popover/CustomPopover";
-import FormTitle from "./Text/FormTitle";
-import InputLabel from "./Text/InputLabel";
+import FormTitle from "../Text/FormTitle";
+import InputLabel from "../Text/InputLabel";
 
 interface Props {
   item?: GetSingleCreatedShortUrlsType;

@@ -9,26 +9,16 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    labelStyle: {
-      paddingTop: "5px",
-    },
-  })
-);
-
-function ErrorText(props: Props) {
-  const classes = useStyles();
-
+function SuccessText(props: Props) {
   return (
     <>
       {props.display && (
         <Typography
-          color="red"
-          fontWeight="bold"
-          fontStyle="italic"
+          variant="h6"
+          color="#38F5AE"
           textAlign="center"
-          className={[classes.labelStyle, props.className].join(" ")}
+          fontFamily="sans-serif"
+          className={props.className}
           style={{ ...props.style }}
         >
           {props.children}
@@ -38,4 +28,4 @@ function ErrorText(props: Props) {
   );
 }
 
-export default ErrorText;
+export default SuccessText;
