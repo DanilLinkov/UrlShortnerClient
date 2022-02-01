@@ -31,7 +31,6 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
-import SuccessText from "../Text/SuccessText";
 import CustomPopover from "../Popover/CustomPopover";
 
 interface Props {

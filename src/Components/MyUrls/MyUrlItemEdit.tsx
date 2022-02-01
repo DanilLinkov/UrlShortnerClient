@@ -1,4 +1,4 @@
-import { Theme, Typography } from "@mui/material";
+import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useState } from "react";
 import { ShortUrlType, UpdateShortUrlType } from "../../Api/ApiResponseTypes";

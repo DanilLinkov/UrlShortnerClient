@@ -1,10 +1,4 @@
-import {
-  Grid,
-  Theme,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Grid, Theme, Typography, useMediaQuery } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +35,7 @@ function Header() {
       .catch(() => {
         authContext.setUser(null);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const logout = () => {
