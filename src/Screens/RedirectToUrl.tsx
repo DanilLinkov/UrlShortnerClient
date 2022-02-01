@@ -34,6 +34,7 @@ function RedirectToUrl(props: Props) {
 
     if (shortUrlId.length <= 0) {
       setError("Invalid short url id");
+      setLoading(false);
       return;
     }
 

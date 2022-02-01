@@ -1,32 +1,18 @@
-import { Theme } from "@mui/material";
-import { createStyles, makeStyles } from "@mui/styles";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   CreateShortUrlType,
   GetSingleCreatedShortUrlsType,
 } from "../Api/ApiResponseTypes";
-import AuthApi from "../Api/AuthApi";
 import ShortUrlApi from "../Api/ShortUrlApi";
 import AfterCreateShortUrlFormContainer from "../Components/CreateShortUrlForm/AfterCreateShortUrlFormContainer";
 import CreateShortUrlFormContainer from "../Components/CreateShortUrlForm/CreateShortUrlFormContainer";
-import AuthContext from "../Context/AuthContext";
 
-interface Props {}
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {},
-  })
-);
-
-function Home(props: Props) {
+function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string>("");
   const [newShortUrl, setNewShortUrl] =
     useState<GetSingleCreatedShortUrlsType>();
-
-  const classes = useStyles();
 
   const navigate = useNavigate();
 

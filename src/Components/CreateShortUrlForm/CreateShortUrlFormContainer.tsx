@@ -7,6 +7,9 @@ import FormButton from "../Buttons/FormButton";
 import DateInput from "../FormInput/DateInput";
 import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
+import ErrorText from "./Text/ErrorText";
+import InputLabel from "./Text/InputLabel";
+import InputSubLabel from "./Text/InputSubLabel";
 
 interface Props {
   onSubmit: (createShortUrl: CreateShortUrlType) => void;
@@ -16,7 +19,7 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    buttonsContainer: {
+    mainContainer: {
       padding: "4%",
       backgroundColor: "rgba( 255, 255, 255, 0.1 )",
       borderRadius: "4px",
@@ -29,6 +32,11 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "center",
       flexDirection: "column",
+    },
+    formInputLabel: {
+      width: "100%",
+      textAlign: "start",
+      paddingBottom: "5px",
     },
   })
 );
@@ -103,18 +111,8 @@ function CreateShortUrlFormContainer(props: Props) {
   };
 
   return (
-    <div className={classes.buttonsContainer}>
-      <FormTextLabel
-        text="Enter URL to shorten"
-        textVariant="h6"
-        fontWeight="bold"
-        containerStyle={{
-          width: "100%",
-          textAlign: "start",
-          marginBottom: "5px",
-        }}
-        textColor="white"
-      />
+    <div className={classes.mainContainer}>
+      <InputLabel>Enter URL to shorten</InputLabel>
       <FormTextInput
         placeHolderText="eg www.shortUrl.com"
         onChange={(event) => {
@@ -122,45 +120,17 @@ function CreateShortUrlFormContainer(props: Props) {
         }}
         containerStyle={{ width: "100%" }}
       />
-      {getApiErrorType() === "longUrl" && (
-        <Typography
-          color="red"
-          fontWeight="bold"
-          fontStyle="italic"
-          style={{ marginTop: "5px" }}
-        >
-          {props.apiError}
-        </Typography>
-      )}
-      <div style={{ width: "100%" }}>
-        <FormTextLabel
-          text="Customize short URL ID"
-          textVariant="h6"
-          fontWeight="bold"
-          containerStyle={{
-            width: "100%",
-            textAlign: "start",
-            marginBottom: "5px",
-            marginTop: "15px",
-          }}
-          textColor="white"
-        />
-        <FormTextLabel
-          text="The short url will be in the form of https://shorturl.com/<customId>"
-          textVariant="body1"
-          fontStyle="italic"
-          textColor="rgba(255,255,255,0.9)"
-          containerStyle={{ marginBottom: "10px" }}
-        />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: "15px",
-            flexDirection: "column",
-          }}
-        >
+      <ErrorText display={getApiErrorType() === "longUrl"}>
+        {props.apiError}
+      </ErrorText>
+      <div style={{ width: "100%", paddingTop: "15px" }}>
+        <InputLabel>Customize short URL ID</InputLabel>
+        <InputSubLabel>
+          {
+            "The short url will be in the form of https://shorturlclient.azurewebsites.net/<customId>"
+          }
+        </InputSubLabel>
+        <div style={{ marginBottom: "15px" }}>
           <FormTextInput
             placeHolderText="eg www.shortUrl.com"
             defaultValue={shortUrl.customId}
@@ -169,31 +139,15 @@ function CreateShortUrlFormContainer(props: Props) {
             }}
             containerStyle={{ width: "100%" }}
           />
-          {getApiErrorType() === "customId" && (
-            <Typography
-              color="red"
-              fontWeight="bold"
-              fontStyle="italic"
-              style={{ marginTop: "5px" }}
-            >
-              {props.apiError}
-            </Typography>
-          )}
+          <ErrorText display={getApiErrorType() === "customId"}>
+            {props.apiError}
+          </ErrorText>
         </div>
         <div>
-          <FormTextLabel
-            text="Customize exipration date"
-            textVariant="h6"
-            fontWeight="bold"
-            textColor="white"
-          />
-          <FormTextLabel
-            text="short URL expires in 1 day from creation by default"
-            textVariant="body1"
-            fontStyle="italic"
-            textColor="rgba(255,255,255,0.9)"
-            containerStyle={{ marginBottom: "10px" }}
-          />
+          <InputLabel>Customize exipration date</InputLabel>
+          <InputSubLabel>
+            The short URL expires 1 day after creation by default
+          </InputSubLabel>
           <DateInput
             value={shortUrl.expirationDate}
             onChange={(date) => setExpirationDate(date)}
@@ -201,50 +155,20 @@ function CreateShortUrlFormContainer(props: Props) {
             maxDate={maxDate}
             setDateError={setDateError}
           />
-          {dateError.length > 0 && (
-            <Typography
-              color="red"
-              fontWeight="bold"
-              fontStyle="italic"
-              textAlign="center"
-              style={{ marginTop: "5px" }}
-            >
-              {dateError}
-            </Typography>
-          )}
+          <ErrorText display={dateError.length > 0}>{dateError}</ErrorText>
         </div>
         <FormButton
           text="Shorten"
           onClick={() => onSubmitForm()}
           disabled={props.loading || dateError.length > 0}
           loading={props.loading}
-          buttonSx={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            color: "rgba(0, 0, 0, 0.5)",
-            fontSize: "1rem",
-            border: "1px solid transparent",
-            borderRadius: "2rem",
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            transition: "background-color 0.3s",
-            "&:hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.2)",
-              border: "1px solid rgba(255, 255, 255, 1)",
-              color: "rgb(255, 255, 255)",
-            },
-          }}
         />
-        {getApiErrorType() === "Internal error" && (
-          <Typography
-            color="red"
-            fontWeight="bold"
-            fontStyle="italic"
-            textAlign="center"
-            style={{ marginTop: "15px" }}
-          >
-            {props.apiError}
-          </Typography>
-        )}
+        <ErrorText
+          style={{ paddingTop: "15px" }}
+          display={getApiErrorType() === "Internal error"}
+        >
+          {props.apiError}
+        </ErrorText>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
-import { Theme, Typography } from "@mui/material";
-import { createStyles, makeStyles } from "@mui/styles";
+import { Typography } from "@mui/material";
 import React from "react";
 
 interface Props {
@@ -36,19 +35,15 @@ interface Props {
     | "800"
     | "900";
   containerStyle?: React.CSSProperties;
+  contianerClassName?: string;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    textContainer: {},
-  })
-);
-
 function FormTextLabel(props: Props) {
-  const classes = useStyles();
-
   return (
-    <div className={classes.textContainer} style={{ ...props.containerStyle }}>
+    <div
+      className={props.contianerClassName}
+      style={{ ...props.containerStyle }}
+    >
       <Typography
         variant={props.textVariant}
         color={props.textColor}

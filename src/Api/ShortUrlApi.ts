@@ -8,7 +8,7 @@ import {
   UpdateShortUrlType,
 } from "./ApiResponseTypes";
 
-const API_URL = "https://shorturlapi.azurewebsites.net/api";
+const API_URL = "https://localhost:6001/api";
 
 class ShortUrlApi {
   GetAllCreatedShortUrls() {
