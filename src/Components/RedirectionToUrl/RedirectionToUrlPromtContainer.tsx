@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material";
+import { Theme, useMediaQuery } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
 import { ShortUrlType } from "../../Api/ApiResponseTypes";
@@ -34,8 +34,13 @@ const useStyles = makeStyles((theme: Theme) =>
 function RedirectionToUrlPromtContainer(props: Props) {
   const classes = useStyles();
 
+  const mdScreenMatch = useMediaQuery("(max-width:900px)");
+
   return (
-    <div className={classes.container}>
+    <div
+      className={classes.container}
+      style={{ width: mdScreenMatch ? "90%" : "70%" }}
+    >
       {props.loading ? (
         <div
           style={{

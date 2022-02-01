@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 interface Props {
   confirm?: () => void;
+  style?: React.CSSProperties;
 }
 
 function DeleteButton(props: Props) {
@@ -29,6 +30,7 @@ function DeleteButton(props: Props) {
   return (
     <div>
       <Button
+        style={props.style}
         variant="contained"
         onClick={handleClickOpen}
         endIcon={<DeleteIcon />}

@@ -1,4 +1,11 @@
-import { Button, Grid, IconButton, Theme, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  IconButton,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import moment from "moment";
 import React, { useState } from "react";
@@ -77,7 +84,12 @@ function MyUrlItem(props: Props) {
   };
 
   const [showEdit, setShowEdit] = useState<boolean>(false);
-  const [showEditedMessage, setShowEditedMessage] = useState<boolean>(false);
+
+  const mainContainerRef = React.useRef<HTMLDivElement | null>(null);
+
+  const [editedAnchor, setEditedAnchor] = React.useState<HTMLDivElement | null>(
+    null
+  );
 
   const [apiError, setApiError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -94,9 +106,9 @@ function MyUrlItem(props: Props) {
         setItem(response.data.result);
         setLoading(false);
         setShowEdit(false);
-        setShowEditedMessage(true);
+        setEditedAnchor(mainContainerRef.current);
         setTimeout(() => {
-          setShowEditedMessage(false);
+          setEditedAnchor(null);
         }, 1000);
       })
       .catch((error) => {
@@ -104,6 +116,8 @@ function MyUrlItem(props: Props) {
         setLoading(false);
       });
   };
+
+  const mdScreenMatch = useMediaQuery("(max-width:900px)");
 
   return (
     <>
@@ -116,51 +130,93 @@ function MyUrlItem(props: Props) {
           onCancel={() => setShowEdit(false)}
         />
       ) : (
-        <div className={classes.itemContainer} style={{ position: "relative" }}>
-          <SuccessText
-            display={showEditedMessage}
-            style={{ position: "absolute", top: "0px", right: "40%" }}
-          >
-            Edited successfully
-          </SuccessText>
+        <div
+          ref={mainContainerRef}
+          className={classes.itemContainer}
+          style={{ position: "relative" }}
+        >
+          <CustomPopover
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            text="Edited item successfully"
+            onClose={() => setEditedAnchor(null)}
+            anchorEl={editedAnchor}
+          />
           <Grid
             container
             justifyContent="center"
-            alignItems="center"
+            alignItems="flex-start"
             style={{ marginBottom: "25px" }}
           >
+            <Grid item xs={12} md={8}>
+              <Typography
+                fontWeight="bold"
+                fontSize="1.3em"
+                className={classes.urlTextStyle}
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
+                {fullItemUrl}
+              </Typography>
+              <Typography
+                fontSize="1em"
+                className={classes.urlTextStyle}
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
+                {item.longUrl}
+              </Typography>
+            </Grid>
             <Grid
-              container
               item
               xs={12}
-              justifyContent="center"
-              alignItems="flex-start"
+              sm={12}
+              md={4}
+              style={
+                mdScreenMatch
+                  ? {
+                      display: "flex",
+                      alignItems: "flex-start",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      paddingTop: "10px",
+                      borderTop: "1px solid rgba(255, 255, 255, 0.5)",
+                    }
+                  : {
+                      display: "flex",
+                      alignItems: "flex-end",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                    }
+              }
             >
-              <Grid item xs={6}>
-                <Typography
-                  fontWeight="bold"
-                  fontSize="1.3em"
-                  className={classes.urlTextStyle}
-                >
-                  {fullItemUrl}
-                </Typography>
-                <Typography fontSize="1em" className={classes.urlTextStyle}>
-                  {item.longUrl}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography className={classes.dateTextStyle}>
-                  Created {moment(item.creationDate).fromNow()}
-                </Typography>
-                <Typography className={classes.dateTextStyle}>
-                  Expires {moment(item.expirationDate).fromNow()}
-                </Typography>
-              </Grid>
+              <Typography className={classes.dateTextStyle}>
+                Created {moment(item.creationDate).fromNow()}
+              </Typography>
+              <Typography className={classes.dateTextStyle}>
+                Expires {moment(item.expirationDate).fromNow()}
+              </Typography>
             </Grid>
           </Grid>
-          <Grid container justifyContent="center" alignItems="center">
-            <Grid item xs={4} justifyContent="flex-start" alignItems="center">
+          <Grid
+            container
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {mdScreenMatch ? (
               <Typography
+                style={
+                  mdScreenMatch
+                    ? { position: "absolute", top: "40%", right: "4%" }
+                    : undefined
+                }
                 display="inline"
                 fontWeight="bold"
                 textAlign="center"
@@ -170,11 +226,27 @@ function MyUrlItem(props: Props) {
               >
                 {item.uses} views
               </Typography>
-            </Grid>
+            ) : (
+              <Grid item xs={12} sm={4}>
+                <Typography
+                  display="inline"
+                  fontWeight="bold"
+                  textAlign="center"
+                  fontSize="1.2em"
+                  fontFamily="sans-serif"
+                  color="rgba( 60, 60, 60, 1 )"
+                >
+                  {item.uses} views
+                </Typography>
+              </Grid>
+            )}
             <Grid
               container
               item
-              xs={8}
+              xs={12}
+              sm={12}
+              md={8}
+              display="flex"
               justifyContent="flex-end"
               alignItems="center"
               spacing={1}
@@ -187,7 +259,7 @@ function MyUrlItem(props: Props) {
                   justifyContent="center"
                   alignItems="flex-end"
                   spacing={1}
-                  xs={5}
+                  xs={6}
                 >
                   <Grid item>
                     <EmailShareButton url={fullItemUrl}>
@@ -237,7 +309,13 @@ function MyUrlItem(props: Props) {
                   </Grid>
                 </Grid>
               ) : (
-                <Grid item>
+                <Grid
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  item
+                  xs={mdScreenMatch ? 6 : undefined}
+                >
                   <Button
                     variant="contained"
                     sx={{
@@ -248,12 +326,19 @@ function MyUrlItem(props: Props) {
                     }}
                     endIcon={<ShareIcon />}
                     onClick={() => setShareButtonOpen(true)}
+                    style={{ width: "100px" }}
                   >
                     Share
                   </Button>
                 </Grid>
               )}
-              <Grid item>
+              <Grid
+                display="flex"
+                justifyContent="flex-start"
+                alignItems="center"
+                item
+                xs={mdScreenMatch ? 6 : undefined}
+              >
                 <Button
                   variant="contained"
                   endIcon={<ContentCopyIcon />}
@@ -266,6 +351,7 @@ function MyUrlItem(props: Props) {
                     backgroundColor: "#2BE49F",
                     "&:hover": { backgroundColor: "#4AF6B6" },
                   }}
+                  style={{ width: "100px" }}
                 >
                   Copy
                 </Button>
@@ -283,7 +369,13 @@ function MyUrlItem(props: Props) {
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid
+                display="flex"
+                justifyContent="flex-end"
+                alignItems="center"
+                item
+                xs={mdScreenMatch ? 6 : undefined}
+              >
                 <Button
                   variant="contained"
                   onClick={() => setShowEdit(true)}
@@ -294,12 +386,22 @@ function MyUrlItem(props: Props) {
                       backgroundColor: "#2BD6E4",
                     },
                   }}
+                  style={{ width: "100px" }}
                 >
                   Edit
                 </Button>
               </Grid>
-              <Grid item>
-                <DeleteButton confirm={() => props.onDelete()} />
+              <Grid
+                display="flex"
+                justifyContent="flex-start"
+                alignItems="center"
+                item
+                xs={mdScreenMatch ? 6 : undefined}
+              >
+                <DeleteButton
+                  confirm={() => props.onDelete()}
+                  style={{ width: "100px" }}
+                />
               </Grid>
             </Grid>
           </Grid>

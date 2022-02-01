@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material";
+import { Theme, useMediaQuery } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useState } from "react";
 import { LoginType } from "../../Api/ApiResponseTypes";
@@ -17,7 +17,6 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      width: "60%",
       marginBottom: "20px",
       padding: "4%",
       backgroundColor: "rgba( 255, 255, 255, 0.1 )",
@@ -42,8 +41,13 @@ function LoginContainer(props: Props) {
     password: "",
   });
 
+  const mdScreenMatch = useMediaQuery("(max-width:900px)");
+
   return (
-    <div className={classes.container}>
+    <div
+      className={classes.container}
+      style={{ width: mdScreenMatch ? "80%" : "60%" }}
+    >
       <FormTitle style={{ marginBottom: "20px" }}>Login</FormTitle>
       <div style={{ width: "80%" }}>
         <InputLabel>Username</InputLabel>

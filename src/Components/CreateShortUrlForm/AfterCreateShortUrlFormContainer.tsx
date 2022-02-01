@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material";
+import { Theme, useMediaQuery } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
 import { GetSingleCreatedShortUrlsType } from "../../Api/ApiResponseTypes";
@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "1px solid rgba(255, 255, 255, 0.5)",
       backdropFilter: "blur( 50px )",
       WebkitBackdropFilter: "blur( 50px )",
-      width: "70%",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -50,8 +49,13 @@ function AfterCreateShortUrlFormContainer(props: Props) {
     "https://shorturlclient.azurewebsites.net/" +
     props.item?.result.shortenedUrlId;
 
+  const mdScreenMatch = useMediaQuery("(max-width:900px)");
+
   return (
-    <div className={classes.buttonsContainer}>
+    <div
+      className={classes.buttonsContainer}
+      style={{ width: mdScreenMatch ? "90%" : "70%" }}
+    >
       <div style={{ width: "100%" }}>
         <FormTitle style={{ marginBottom: "20px" }}>
           Your new Shortened URL

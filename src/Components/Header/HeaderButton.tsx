@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Theme } from "@mui/material";
+import { Grid, Theme, useMediaQuery } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
 
@@ -13,8 +13,7 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonContainer: {
-      marginLeft: "10px",
-      marginRight: "10px",
+      height: "100%",
     },
   })
 );
@@ -22,9 +21,21 @@ const useStyles = makeStyles((theme: Theme) =>
 function HeaderButton(props: Props) {
   const classes = useStyles();
 
+  const mdScreenMatch = useMediaQuery("(max-width:900px)");
+
   return (
-    <div className={classes.buttonContainer}>
+    <Grid
+      item
+      className={classes.buttonContainer}
+      xs={12}
+      md={2}
+      xl={3}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
       <LoadingButton
+        style={{ width: mdScreenMatch ? "70%" : "100%", height: "100%" }}
         loading={props.loading}
         size="large"
         onClick={props.onClick}
@@ -44,7 +55,7 @@ function HeaderButton(props: Props) {
       >
         {props.text}
       </LoadingButton>
-    </div>
+    </Grid>
   );
 }
 

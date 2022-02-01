@@ -151,17 +151,12 @@ function MyUrlItemEdit(props: Props) {
             }}
           />
         </div>
-        {getApiErrorType() === "Internal error" && (
-          <Typography
-            color="red"
-            fontWeight="bold"
-            fontStyle="italic"
-            textAlign="center"
-            style={{ marginTop: "15px" }}
-          >
-            {props.apiError}
-          </Typography>
-        )}
+        <ErrorText
+          style={{ marginTop: "15px" }}
+          display={getApiErrorType() === "Internal error"}
+        >
+          {props.apiError}
+        </ErrorText>
       </div>
     </div>
   );

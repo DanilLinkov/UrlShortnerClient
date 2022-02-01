@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material";
+import { Grid, Theme, useMediaQuery } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,25 +10,23 @@ interface Props {
   loading: boolean;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    buttonsContainer: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-  })
-);
-
 function HeaderButtonGroup(props: Props) {
-  const classes = useStyles();
   const navigate = useNavigate();
 
   return (
-    <div className={classes.buttonsContainer}>
+    <Grid
+      container
+      item
+      display="flex"
+      flexDirection="row"
+      justifyContent="flex-end"
+      alignItems="center"
+      xs={12}
+      md={9}
+      spacing={1}
+    >
       <HeaderButton
-        text="Shorten Url"
+        text="Home"
         onClick={() => {
           navigate("/app/");
         }}
@@ -63,7 +61,7 @@ function HeaderButtonGroup(props: Props) {
           />
         </>
       )}
-    </div>
+    </Grid>
   );
 }
 

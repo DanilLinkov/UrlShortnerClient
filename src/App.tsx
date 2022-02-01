@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material";
+import { Theme, useMediaQuery } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useMemo, useState } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -31,12 +31,17 @@ function App() {
   const [user, setUser] = useState<UserType | null>(null);
   const authContextValue = useMemo(() => ({ user, setUser }), [user]);
 
+  const mdScreenMatch = useMediaQuery("(max-width:900px)");
+
   return (
     <div style={{ position: "relative", overflow: "auto" }}>
       <AuthContext.Provider value={authContextValue}>
         <Header />
       </AuthContext.Provider>
-      <div className={classes.root}>
+      <div
+        className={classes.root}
+        style={{ marginBottom: mdScreenMatch ? "200px" : "100px" }}
+      >
         <Routes>
           <Route
             path="/app/register"

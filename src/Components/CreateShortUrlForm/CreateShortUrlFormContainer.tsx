@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material";
+import { Theme, useMediaQuery } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useState } from "react";
 import { CreateShortUrlType } from "../../Api/ApiResponseTypes";
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "1px solid rgba(255, 255, 255, 0.5)",
       backdropFilter: "blur( 50px )",
       WebkitBackdropFilter: "blur( 50px )",
-      width: "70%",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -108,8 +107,14 @@ function CreateShortUrlFormContainer(props: Props) {
     }
   };
 
+  const mdScreenMatch = useMediaQuery("(max-width:900px)");
+  const xsScreenMatch = useMediaQuery("(max-width:520px)");
+
   return (
-    <div className={classes.mainContainer}>
+    <div
+      className={classes.mainContainer}
+      style={{ width: mdScreenMatch ? "90%" : "70%" }}
+    >
       <InputLabel>Enter URL to shorten</InputLabel>
       <FormTextInput
         placeHolderText="eg www.shortUrl.com"
@@ -124,13 +129,13 @@ function CreateShortUrlFormContainer(props: Props) {
       <div style={{ width: "100%", paddingTop: "15px" }}>
         <InputLabel>Customize short URL ID</InputLabel>
         <InputSubLabel>
-          {
-            "The short url will be in the form of https://shorturlclient.azurewebsites.net/<customId>"
-          }
+          {xsScreenMatch
+            ? "The short url will be in the form of https://ourdomain/<customId>"
+            : "The short url will be in the form of https://shorturlclient.azurewebsites.net/<customId>"}
         </InputSubLabel>
         <div style={{ marginBottom: "15px" }}>
           <FormTextInput
-            placeHolderText="eg www.shortUrl.com"
+            placeHolderText="eg customId"
             defaultValue={shortUrl.customId}
             onChange={(event) => {
               setCustomId(event.target.value);

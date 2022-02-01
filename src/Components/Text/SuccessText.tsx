@@ -1,5 +1,4 @@
-import { Theme, Typography } from "@mui/material";
-import { createStyles, makeStyles } from "@mui/styles";
+import { Typography } from "@mui/material";
 import React from "react";
 
 interface Props {
