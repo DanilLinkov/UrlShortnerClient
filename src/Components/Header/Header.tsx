@@ -1,12 +1,10 @@
-import { Container, Theme, Typography } from "@mui/material";
+import { Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthApi from "../../Api/AuthApi";
 import AuthContext from "../../Context/AuthContext";
 import HeaderButtonGroup from "./HeaderButtonGroup";
-
-interface Props {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Header(props: Props) {
+function Header() {
   const classes = useStyles();
   const [loading, setLoading] = useState<boolean>(false);
 

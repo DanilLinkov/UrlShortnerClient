@@ -1,9 +1,6 @@
-import { Container, Grid, IconButton, Theme, Typography } from "@mui/material";
+import { Grid, IconButton, Theme, Typography } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthApi from "../../Api/AuthApi";
-import AuthContext from "../../Context/AuthContext";
+import React from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import MailIcon from "@mui/icons-material/Mail";

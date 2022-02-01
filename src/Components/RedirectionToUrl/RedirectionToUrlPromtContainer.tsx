@@ -1,13 +1,10 @@
-import { Button, Theme, Typography } from "@mui/material";
+import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { ShortUrlType } from "../../Api/ApiResponseTypes";
 import FormButton from "../Buttons/FormButton";
 import FormTextInput from "../FormInput/FormTextInput";
-import FormTextLabel from "../FormInput/FormTextLabel";
 import CircularProgress from "@mui/material/CircularProgress";
-import FormTitle from "../Text/FormTitle";
 import InputLabel from "../Text/InputLabel";
 
 interface Props {
@@ -36,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RedirectionToUrlPromtContainer(props: Props) {
   const classes = useStyles();
-  const navigate = useNavigate();
 
   return (
     <div className={classes.container}>

@@ -1,10 +1,9 @@
-import { Theme, Typography } from "@mui/material";
+import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useState } from "react";
 import { RegisterType } from "../../Api/ApiResponseTypes";
 import FormButton from "../Buttons/FormButton";
 import FormTextInput from "../FormInput/FormTextInput";
-import FormTextLabel from "../FormInput/FormTextLabel";
 import ErrorText from "../Text/ErrorText";
 import FormTitle from "../Text/FormTitle";
 import InputLabel from "../Text/InputLabel";

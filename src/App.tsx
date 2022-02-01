@@ -1,13 +1,10 @@
-import Context from "@mui/base/TabsUnstyled/TabsContext";
 import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { ShortUrlType, UserType } from "./Api/ApiResponseTypes";
-import ShortUrlApi from "./Api/ShortUrlApi";
+import { UserType } from "./Api/ApiResponseTypes";
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
-import RedirectionToUrlPromtContainer from "./Components/RedirectionToUrl/RedirectionToUrlPromtContainer";
 import AuthContext from "./Context/AuthContext";
 import Home from "./Screens/Home";
 import Login from "./Screens/Login";
