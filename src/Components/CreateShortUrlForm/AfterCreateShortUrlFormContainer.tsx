@@ -111,10 +111,14 @@ function AfterCreateShortUrlFormContainer(props: Props) {
         />
         <FormTextInput
           readonly
-          value={"http://localhost:3000/" + props.item?.result.shortenedUrlId}
+          value={
+            "https://shorturlclient.azurewebsites.net/" +
+            props.item?.result.shortenedUrlId
+          }
           onClick={(event) => {
             copyToClipBoard(
-              "http://localhost:3000/" + props.item?.result.shortenedUrlId
+              "https://shorturlclient.azurewebsites.net/" +
+                props.item?.result.shortenedUrlId
             );
             setAnchorEl2(event.currentTarget);
             setTimeout(() => setAnchorEl2(null), 800);
