@@ -1,26 +1,10 @@
-import { Theme } from "@mui/material";
-import { createStyles, makeStyles } from "@mui/styles";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  GetSingleCreatedShortUrlsType,
-  ShortUrlType,
-} from "../Api/ApiResponseTypes";
-import AuthApi from "../Api/AuthApi";
+import { ShortUrlType } from "../Api/ApiResponseTypes";
 import ShortUrlApi from "../Api/ShortUrlApi";
 import RedirectionToUrlPromtContainer from "../Components/RedirectionToUrl/RedirectionToUrlPromtContainer";
-import AuthContext from "../Context/AuthContext";
 
-interface Props {}
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {},
-  })
-);
-
-function RedirectToUrl(props: Props) {
-  const classes = useStyles();
+function RedirectToUrl() {
   const [loading, setLoading] = useState<boolean>(true);
   const [shortUrl, setShortUrl] = useState<ShortUrlType>();
   const [error, setError] = useState<string>("");

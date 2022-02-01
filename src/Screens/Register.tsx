@@ -1,5 +1,3 @@
-import { Theme } from "@mui/material";
-import { createStyles, makeStyles } from "@mui/styles";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RegisterType } from "../Api/ApiResponseTypes";
@@ -7,15 +5,7 @@ import AuthApi from "../Api/AuthApi";
 import RegisterContainer from "../Components/RegisterForm/RegisterContainer";
 import AuthContext from "../Context/AuthContext";
 
-interface Props {}
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {},
-  })
-);
-
-function Register(props: Props) {
+function Register() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<string[]>(new Array<string>());
 
@@ -23,6 +13,10 @@ function Register(props: Props) {
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
+    checkLogin();
+  }, []);
+
+  const checkLogin = async () => {
     AuthApi.CheckLogin()
       .then((response) => {
         if (response.data.result) {
@@ -33,9 +27,7 @@ function Register(props: Props) {
       .catch(() => {
         authContext.setUser(null);
       });
-  }, []);
-
-  const classes = useStyles();
+  };
 
   const onSubmit = (registerDetails: RegisterType) => {
     setLoading(true);
@@ -43,15 +35,15 @@ function Register(props: Props) {
 
     AuthApi.Register(registerDetails)
       .then((response) => {
+        checkLogin();
         setLoading(false);
-        navigate("/app/");
       })
       .catch((error) => {
         setLoading(false);
 
         let newErrors = new Array<string>();
 
-        for (let [key, value] of Object.entries(error.response.data.result)) {
+        for (let [, value] of Object.entries(error.response.data.result)) {
           newErrors.push(value as string);
         }
 

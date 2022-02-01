@@ -2,20 +2,12 @@ import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginType, ShortUrlType } from "../Api/ApiResponseTypes";
+import { LoginType } from "../Api/ApiResponseTypes";
 import AuthApi from "../Api/AuthApi";
 import LoginContainer from "../Components/LoginForm/LoginContainer";
 import AuthContext from "../Context/AuthContext";
 
-interface Props {}
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {},
-  })
-);
-
-function Login(props: Props) {
+function Login() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<string[]>(new Array<string>());
 
@@ -34,8 +26,6 @@ function Login(props: Props) {
         authContext.setUser(null);
       });
   }, []);
-
-  const classes = useStyles();
 
   const onSubmit = (loginDetails: LoginType) => {
     setLoading(true);

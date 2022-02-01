@@ -11,6 +11,7 @@ interface Props {
   value?: string;
   defaultValue?: string;
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  type?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,6 +45,7 @@ function FormTextInput(props: Props) {
   return (
     <div style={{ ...props.containerStyle }}>
       <TextField
+        type={props.type}
         InputProps={{
           className: [classes.input, props.readonly && classes.pointer].join(
             " "

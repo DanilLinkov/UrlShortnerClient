@@ -5,6 +5,9 @@ import { LoginType } from "../../Api/ApiResponseTypes";
 import FormButton from "../Buttons/FormButton";
 import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
+import ErrorText from "../Text/ErrorText";
+import FormTitle from "../Text/FormTitle";
+import InputLabel from "../Text/InputLabel";
 
 interface Props {
   onSubmit: (loginDetails: LoginType) => void;
@@ -42,22 +45,9 @@ function LoginContainer(props: Props) {
 
   return (
     <div className={classes.container}>
-      <Typography
-        variant="h4"
-        fontWeight="bold"
-        textAlign="center"
-        style={{ marginBottom: "20px" }}
-        color="white"
-      >
-        Login
-      </Typography>
+      <FormTitle style={{ marginBottom: "20px" }}>Login</FormTitle>
       <div style={{ width: "80%" }}>
-        <FormTextLabel
-          text="Username"
-          textVariant="h6"
-          fontWeight="bold"
-          textColor="white"
-        />
+        <InputLabel>Username</InputLabel>
         <FormTextInput
           placeHolderText="eg www.shortUrl.com"
           onChange={(event) => {
@@ -68,12 +58,7 @@ function LoginContainer(props: Props) {
           }}
           containerStyle={{ marginBottom: "30px" }}
         />
-        <FormTextLabel
-          text="Password"
-          textVariant="h6"
-          fontWeight="bold"
-          textColor="white"
-        />
+        <InputLabel>Password</InputLabel>
         <FormTextInput
           placeHolderText="eg www.shortUrl.com"
           onChange={(event) => {
@@ -82,38 +67,19 @@ function LoginContainer(props: Props) {
               password: event.target.value,
             });
           }}
+          type="password"
         />
         {props.errors.length > 0 &&
           props.errors.map((value) => (
-            <Typography
-              color="red"
-              fontWeight="bold"
-              fontStyle="italic"
-              textAlign="center"
-              style={{ marginTop: "15px" }}
-            >
+            <ErrorText display={true} style={{ paddingTop: "15px" }}>
               {value}
-            </Typography>
+            </ErrorText>
           ))}
         <FormButton
           loading={props.loading}
+          disabled={props.loading}
           text="Login"
           onClick={() => props.onSubmit(loginDetails)}
-          buttonSx={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            color: "rgba(0, 0, 0, 0.5)",
-            fontSize: "1rem",
-            border: "1px solid transparent",
-            borderRadius: "2rem",
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            transition: "background-color 0.3s",
-            "&:hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.2)",
-              border: "1px solid rgba(255, 255, 255, 1)",
-              color: "rgb(255, 255, 255)",
-            },
-          }}
         />
       </div>
     </div>

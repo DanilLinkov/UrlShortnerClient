@@ -7,6 +7,8 @@ import FormButton from "../Buttons/FormButton";
 import FormTextInput from "../FormInput/FormTextInput";
 import FormTextLabel from "../FormInput/FormTextLabel";
 import CircularProgress from "@mui/material/CircularProgress";
+import FormTitle from "../Text/FormTitle";
+import InputLabel from "../Text/InputLabel";
 
 interface Props {
   error: string;
@@ -58,47 +60,20 @@ function RedirectionToUrlPromtContainer(props: Props) {
             flexDirection: "column",
           }}
         >
-          <Typography
-            color="white"
-            fontWeight="bold"
-            fontStyle="italic"
-            textAlign="center"
-            variant="h5"
-            style={{ marginTop: "15px" }}
-          >
+          <InputLabel style={{ marginBottom: "15px", textAlign: "center" }}>
             {props.error}
-          </Typography>
-          <Button
+          </InputLabel>
+          <FormButton
             onClick={() => props.onCancel()}
-            variant="contained"
-            size="large"
+            text="Shorten a URL"
             style={{ marginTop: "25px" }}
-            sx={{
-              backgroundColor: "rgba(255, 255, 255, 0.8)",
-              color: "rgba(0, 0, 0, 0.5)",
-              fontSize: "1rem",
-              border: "1px solid transparent",
-              fontWeight: "bold",
-              transition: "background-color 0.3s",
-              "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.2)",
-                border: "1px solid rgba(255, 255, 255, 1)",
-                color: "rgb(255, 255, 255)",
-              },
-            }}
-          >
-            Shorten a URL
-          </Button>
+          />
         </div>
       ) : (
         <>
-          <FormTextLabel
-            textColor="white"
-            text="Are u sure you want to proceed to this URL?"
-            textVariant="h6"
-            fontWeight="bold"
-            containerStyle={{ textAlign: "center", marginBottom: "20px" }}
-          />
+          <InputLabel style={{ marginBottom: "20px", textAlign: "center" }}>
+            Are u sure you want to proceed to this URL?
+          </InputLabel>
           <FormTextInput readonly value={props.shortUrl?.longUrl} />
           <div
             style={{
@@ -115,19 +90,6 @@ function RedirectionToUrlPromtContainer(props: Props) {
                 width: "100px",
               }}
               onClick={() => props.onContinue()}
-              buttonSx={{
-                backgroundColor: "rgba(255, 255, 255, 0.8)",
-                color: "rgba(0, 0, 0, 0.5)",
-                fontSize: "1rem",
-                border: "1px solid transparent",
-                fontWeight: "bold",
-                transition: "background-color 0.3s",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                  border: "1px solid rgba(255, 255, 255, 1)",
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
             />
             <FormButton
               text="Home"
@@ -135,19 +97,6 @@ function RedirectionToUrlPromtContainer(props: Props) {
                 width: "100px",
               }}
               onClick={() => props.onCancel()}
-              buttonSx={{
-                backgroundColor: "rgba(255, 255, 255, 0.8)",
-                color: "rgba(0, 0, 0, 0.5)",
-                fontSize: "1rem",
-                border: "1px solid transparent",
-                fontWeight: "bold",
-                transition: "background-color 0.3s",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                  border: "1px solid rgba(255, 255, 255, 1)",
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
             />
           </div>
         </>
