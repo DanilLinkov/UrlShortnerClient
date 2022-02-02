@@ -10,7 +10,7 @@
 
 ## Description
 
-### Note: A lot more information about the "guts" of this project can be found on the API github (https://github.com/DanilLinkov/UrlShortner)  page so please consider reading it if interested.
+### Note: A lot more information about the "guts" of this project can be found on the API github (https://github.com/DanilLinkov/UrlShortnerApi)  page so please consider reading it if interested.
 
 URL Shortner client is a front-end React app that provides the ability to store long URLs and access them with a shorter version. Functionality for viewing the list of created ShortUrls, deleting, editing and sharing them is also provided. Custom Ids and expiration dates can also be used for the ShortUrls. All of the features are available to both authenticated and anonymous users and anonymous users are identified between sessions.
 
@@ -18,7 +18,7 @@ An instance of this front-end React app is hosted on Azure here: https://shortur
 
 This project makes use of URL Shortner API and a lot more information on it can be found with the following links:
 
-- Source code and documentation: https://github.com/DanilLinkov/UrlShortner
+- Source code and documentation: https://github.com/DanilLinkov/UrlShortnerApi
 - Azure hosted instance: https://shorturlapi.azurewebsites.net/
 
 The API also makes use of a Key Generation Service (personal project created for this) which can be found here: 
