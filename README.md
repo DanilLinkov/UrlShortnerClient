@@ -41,7 +41,7 @@ The API also makes use of a Key Generation Service (personal project created for
 
 API Tech stack can be found in the github link provided above
 
-## Install and run
+## Install & run
 
 - `git clone https://github.com/DanilLinkov/UrlShortnerClient.git`
 - In a command window at the root level of the project run `npm install` followed by  `npm start`
@@ -51,12 +51,15 @@ API Tech stack can be found in the github link provided above
 A link to the hosted instance of this is provided above.
 
 ### Home
+![image](https://user-images.githubusercontent.com/67947005/152104754-76cf8792-9562-4b11-bf2c-432efe1b3a6c.png)
 
 ### My URLs
+![image](https://user-images.githubusercontent.com/67947005/152104787-14b27fe7-8a90-4121-a98d-0d8614d5160b.png)
+![image](https://user-images.githubusercontent.com/67947005/152104847-f16d6c87-0191-49b8-87c2-f39317c8c04a.png)
 
 ### Register & Login
-
-### Stored Cookies
+![image](https://user-images.githubusercontent.com/67947005/152104864-46cf5028-9430-4db6-8739-7d52bb0eb113.png)
+![image](https://user-images.githubusercontent.com/67947005/152104883-77cf0040-5315-47cf-b84c-19d81ab581bf.png)
 
 
 
