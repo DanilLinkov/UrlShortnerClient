@@ -1,46 +1,62 @@
-# Getting Started with Create React App
+# URL Shortner Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of contents
 
-## Available Scripts
+1. [Description](#description)
+2. [Quick feature summary](#quick-feature-summary)
+3. [Tech stack](#tech-stack)
+4. [Install & Run](#install--run)
+5. [Usage](#usagedemo)
 
-In the project directory, you can run:
+## Description
 
-### `yarn start`
+### Note: A lot more information about the "guts" of this project can be found on the API github (https://github.com/DanilLinkov/UrlShortner)  page so please consider reading it if interested.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+URL Shortner client is a front-end React app that provides the ability to store long URLs and access them with a shorter version. Functionality for viewing the list of created ShortUrls, deleting, editing and sharing them is also provided. Custom Ids and expiration dates can also be used for the ShortUrls. All of the features are available to both authenticated and anonymous users and anonymous users are identified between sessions.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+This project makes use of URL Shortner API and a lot more information on it can be found with the following links:
 
-### `yarn test`
+- Source code and documentation: https://github.com/DanilLinkov/UrlShortner
+- Azure hosted instance: https://shorturlapi.azurewebsites.net/
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The API also makes use of a Key Generation Service (personal project created for this) which can be found here: 
 
-### `yarn build`
+- Source code and documentation: https://github.com/DanilLinkov/KeyGenerationService
+- Azure hosted instance: https://kgsapikeyusagefunction.azurewebsites.net/
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Quick feature summary
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Anonymous and Authenticated user support.
+- Register and login using session based authentication.
+- Create ShortUrls given a valid long URL, a custom Id and a custom expiration date if desired.
+- View, edit, delete and share created ShortUrls which are retrieved based on the user's session cookie where anonymous users also contain an encrypted GUID cookie to allow them to be identified between sessions.
+- Navigate to ShortUrls and be guided to the stored long url under it's Id.
+- Responsive web design allowing for good viewing experience on a variety of screen sizes.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tech stack
 
-### `yarn eject`
+- React
+- Typescript
+- Material UI
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+API Tech stack can be found in the github link provided above
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Install and run
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- `git clone https://github.com/DanilLinkov/UrlShortnerClient.git`
+- In a command window at the root level of the project run `npm install` followed by  `npm start`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Usage/Demo
 
-## Learn More
+A link to the hosted instance of this is provided above.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Home
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### My URLs
+
+### Register & Login
+
+### Stored Cookies
+
+
+
