@@ -7,6 +7,7 @@ import FormTextInput from "../FormInput/FormTextInput";
 import ErrorText from "../Text/ErrorText";
 import FormTitle from "../Text/FormTitle";
 import InputLabel from "../Text/InputLabel";
+import InputSubLabel from "../Text/InputSubLabel";
 
 interface Props {
   onSubmit: (registerDetails: RegisterType) => void;
@@ -50,6 +51,10 @@ function RegisterContainer(props: Props) {
     >
       <FormTitle style={{ marginBottom: "20px" }}>Register</FormTitle>
       <div style={{ width: "80%" }}>
+        <InputSubLabel style={{ textAlign: "center", marginBottom: "10px" }}>
+          Note: Only the most minimal restrictions have been imposed on username
+          and password for easier testing/playing with the application.
+        </InputSubLabel>
         <InputLabel>Username</InputLabel>
         <FormTextInput
           placeHolderText="eg www.shortUrl.com"

@@ -6,6 +6,7 @@ import FormButton from "../Buttons/FormButton";
 import DateInput from "../FormInput/DateInput";
 import FormTextInput from "../FormInput/FormTextInput";
 import ErrorText from "../Text/ErrorText";
+import FormTitle from "../Text/FormTitle";
 import InputLabel from "../Text/InputLabel";
 import InputSubLabel from "../Text/InputSubLabel";
 
@@ -115,6 +116,10 @@ function CreateShortUrlFormContainer(props: Props) {
       className={classes.mainContainer}
       style={{ width: mdScreenMatch ? "90%" : "70%" }}
     >
+      <FormTitle style={{ marginBottom: "20px" }}>Create a ShortURL</FormTitle>
+      <InputSubLabel style={{ textAlign: "center", marginBottom: "10px" }}>
+        Note: Please be patient with the initial cold start of the application.
+      </InputSubLabel>
       <InputLabel>Enter URL to shorten</InputLabel>
       <FormTextInput
         placeHolderText="eg www.shortUrl.com"

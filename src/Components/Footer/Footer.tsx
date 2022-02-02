@@ -53,7 +53,13 @@ function Footer(props: Props) {
           textAlign="center"
         >
           <Grid>
-            <IconButton>
+            <IconButton
+              onClick={() =>
+                window.open(
+                  "https://drive.google.com/file/d/1Rm1Vmsl2SOARheh87En7aWqzjkyDzMN2/view?usp=sharing"
+                )
+              }
+            >
               <Typography
                 sx={{
                   border: "1px solid #51425A",
