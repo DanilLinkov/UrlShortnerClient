@@ -1,6 +1,7 @@
 {
   "name": "urlshortnerclient",
   "version": "0.1.0",
+  "homepage": "https://shorturlclient.azurewebsites.net/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.7.1",
